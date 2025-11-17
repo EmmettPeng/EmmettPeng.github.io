@@ -1,0 +1,720 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page_avatar.png">
+  <link rel="icon" href="/img/page_avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Emmett Peng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Pandas入门笔记从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。主要参考了bilibili的up主@蚂蚁学python的视频Python Pandas 数据分析，编程练习100例和W3Cschool的Pandas中文教程。 这一部分是上一部分的延伸，是蚂蚁学python的视频的P21-30，使用的数据是一个股票数据，数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作">
+<meta property="og:url" content="https://emmettpeng.github.io/2023/11/15/pandas-base-2/index.html">
+<meta property="og:site_name" content="Emmett&#39;s Note">
+<meta property="og:description" content="Pandas入门笔记从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。主要参考了bilibili的up主@蚂蚁学python的视频Python Pandas 数据分析，编程练习100例和W3Cschool的Pandas中文教程。 这一部分是上一部分的延伸，是蚂蚁学python的视频的P21-30，使用的数据是一个股票数据，数据">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-15T13:39:36.000Z">
+<meta property="article:modified_time" content="2023-11-22T13:26:04.355Z">
+<meta property="article:author" content="Emmett Peng">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作 - Emmett&#39;s Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"emmettpeng.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>emmett&#39;s notebook</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-15 21:39" pubdate>
+          November 15, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          82 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Pandas入门笔记"><a href="#Pandas入门笔记" class="headerlink" title="Pandas入门笔记"></a>Pandas入门笔记</h1><p>从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。<br>主要参考了bilibili的up主<a target="_blank" rel="noopener" href="https://space.bilibili.com/61036655">@蚂蚁学python</a>的视频<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Nq4y1Z7Q8?p=4&vd_source=708323e5553f1c0b8879d3d65a98b898">Python Pandas 数据分析，编程练习100例</a>和<a target="_blank" rel="noopener" href="https://www.w3cschool.cn/hyspo/">W3Cschool的Pandas中文教程</a>。</p>
+<p>这一部分是<a target="_blank" rel="noopener" href="https://www.emmettnotebook.com/2023/11/01/pandas-base/">上一部分</a>的延伸，是蚂蚁学python的视频的P21-30，使用的数据是一个股票数据，数据来源是：<a target="_blank" rel="noopener" href="https://github.com/yatingliu2019/Python-Pandas-data-analysis/blob/main/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/00700.HK.csv">https://github.com/yatingliu2019/Python-Pandas-data-analysis/blob/main/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/00700.HK.csv</a></p>
+<p>以下是数据的预览：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Date</span>,Open,High,Low,Close,Volume<br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">30</span>,<span class="hljs-number">456</span>.<span class="hljs-number">0</span>,<span class="hljs-number">464</span>.<span class="hljs-number">6</span>,<span class="hljs-number">453</span>.<span class="hljs-number">8</span>,<span class="hljs-number">461</span>.<span class="hljs-number">4</span>,<span class="hljs-number">17335451</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">29</span>,<span class="hljs-number">461</span>.<span class="hljs-number">6</span>,<span class="hljs-number">465</span>.<span class="hljs-number">0</span>,<span class="hljs-number">450</span>.<span class="hljs-number">2</span>,<span class="hljs-number">465</span>.<span class="hljs-number">0</span>,<span class="hljs-number">18250450</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">28</span>,<span class="hljs-number">467</span>.<span class="hljs-number">0</span>,<span class="hljs-number">476</span>.<span class="hljs-number">2</span>,<span class="hljs-number">464</span>.<span class="hljs-number">6</span>,<span class="hljs-number">469</span>.<span class="hljs-number">8</span>,<span class="hljs-number">20947276</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">27</span>,<span class="hljs-number">459</span>.<span class="hljs-number">0</span>,<span class="hljs-number">473</span>.<span class="hljs-number">0</span>,<span class="hljs-number">455</span>.<span class="hljs-number">2</span>,<span class="hljs-number">464</span>.<span class="hljs-number">6</span>,<span class="hljs-number">17966998</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">24</span>,<span class="hljs-number">461</span>.<span class="hljs-number">4</span>,<span class="hljs-number">473</span>.<span class="hljs-number">4</span>,<span class="hljs-number">456</span>.<span class="hljs-number">2</span>,<span class="hljs-number">460</span>.<span class="hljs-number">2</span>,<span class="hljs-number">16656914</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">23</span>,<span class="hljs-number">460</span>.<span class="hljs-number">2</span>,<span class="hljs-number">469</span>.<span class="hljs-number">6</span>,<span class="hljs-number">456</span>.<span class="hljs-number">4</span>,<span class="hljs-number">463</span>.<span class="hljs-number">2</span>,<span class="hljs-number">22210868</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">21</span>,<span class="hljs-number">446</span>.<span class="hljs-number">0</span>,<span class="hljs-number">453</span>.<span class="hljs-number">8</span>,<span class="hljs-number">443</span>.<span class="hljs-number">2</span>,<span class="hljs-number">450</span>.<span class="hljs-number">0</span>,<span class="hljs-number">16556875</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">20</span>,<span class="hljs-number">456</span>.<span class="hljs-number">6</span>,<span class="hljs-number">457</span>.<span class="hljs-number">4</span>,<span class="hljs-number">448</span>.<span class="hljs-number">0</span>,<span class="hljs-number">454</span>.<span class="hljs-number">2</span>,<span class="hljs-number">15513224</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">17</span>,<span class="hljs-number">445</span>.<span class="hljs-number">8</span>,<span class="hljs-number">467</span>.<span class="hljs-number">6</span>,<span class="hljs-number">445</span>.<span class="hljs-number">2</span>,<span class="hljs-number">461</span>.<span class="hljs-number">8</span>,<span class="hljs-number">23982628</span><br><span class="hljs-attribute">2021</span>-<span class="hljs-number">09</span>-<span class="hljs-number">16</span>,<span class="hljs-number">446</span>.<span class="hljs-number">8</span>,<span class="hljs-number">454</span>.<span class="hljs-number">8</span>,<span class="hljs-number">445</span>.<span class="hljs-number">0</span>,<span class="hljs-number">451</span>.<span class="hljs-number">0</span>,<span class="hljs-number">24519868</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="P21-22-加载csv表格到数据框，查看数据基本情况和统计"><a href="#P21-22-加载csv表格到数据框，查看数据基本情况和统计" class="headerlink" title="P21&amp;22 加载csv表格到数据框，查看数据基本情况和统计"></a>P21&amp;22 加载csv表格到数据框，查看数据基本情况和统计</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><span class="hljs-built_in">print</span>(df.info())<br><span class="hljs-built_in">print</span>(df.describe())<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.info())<br>&lt;<span class="hljs-keyword">class</span> <span class="hljs-string">&#x27;pandas.core.frame.DataFrame&#x27;</span>&gt;<br>RangeIndex: <span class="hljs-number">4267</span> entries, <span class="hljs-number">0</span> to <span class="hljs-number">4266</span><br>Data columns (total <span class="hljs-number">6</span> columns):<br> <span class="hljs-comment">#   Column  Non-Null Count  Dtype  </span><br>---  ------  --------------  -----  <br> <span class="hljs-number">0</span>   Date    <span class="hljs-number">4267</span> non-null   <span class="hljs-built_in">object</span> <br> <span class="hljs-number">1</span>   Open    <span class="hljs-number">4267</span> non-null   float64<br> <span class="hljs-number">2</span>   High    <span class="hljs-number">4267</span> non-null   float64<br> <span class="hljs-number">3</span>   Low     <span class="hljs-number">4267</span> non-null   float64<br> <span class="hljs-number">4</span>   Close   <span class="hljs-number">4267</span> non-null   float64<br> <span class="hljs-number">5</span>   Volume  <span class="hljs-number">4267</span> non-null   int64  <br>dtypes: float64(<span class="hljs-number">4</span>), int64(<span class="hljs-number">1</span>), <span class="hljs-built_in">object</span>(<span class="hljs-number">1</span>)<br>memory usage: <span class="hljs-number">200.1</span>+ KB<br><span class="hljs-literal">None</span><br><span class="hljs-comment"># 说明数据已经被正确加载了</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.describe())<br>              Open         High          Low        Close        Volume<br>count  <span class="hljs-number">4267.000000</span>  <span class="hljs-number">4267.000000</span>  <span class="hljs-number">4267.000000</span>  <span class="hljs-number">4267.000000</span>  <span class="hljs-number">4.267000e+03</span><br>mean    <span class="hljs-number">211.010729</span>   <span class="hljs-number">213.575773</span>   <span class="hljs-number">208.063849</span>   <span class="hljs-number">210.778935</span>  <span class="hljs-number">1.198943e+07</span><br>std     <span class="hljs-number">170.116303</span>   <span class="hljs-number">172.173404</span>   <span class="hljs-number">167.716394</span>   <span class="hljs-number">169.807145</span>  <span class="hljs-number">1.413407e+07</span><br><span class="hljs-built_in">min</span>       <span class="hljs-number">3.375000</span>     <span class="hljs-number">3.500000</span>     <span class="hljs-number">3.375000</span>     <span class="hljs-number">3.375000</span>  <span class="hljs-number">4.523670e+05</span><br><span class="hljs-number">25</span>%      <span class="hljs-number">58.000000</span>    <span class="hljs-number">59.200000</span>    <span class="hljs-number">56.050000</span>    <span class="hljs-number">57.500000</span>  <span class="hljs-number">3.600698e+06</span><br><span class="hljs-number">50</span>%     <span class="hljs-number">170.900000</span>   <span class="hljs-number">173.300000</span>   <span class="hljs-number">168.000000</span>   <span class="hljs-number">170.700000</span>  <span class="hljs-number">7.647284e+06</span><br><span class="hljs-number">75</span>%     <span class="hljs-number">330.700000</span>   <span class="hljs-number">333.100000</span>   <span class="hljs-number">326.500000</span>   <span class="hljs-number">330.000000</span>  <span class="hljs-number">1.726551e+07</span><br><span class="hljs-built_in">max</span>     <span class="hljs-number">767.000000</span>   <span class="hljs-number">775.500000</span>   <span class="hljs-number">751.500000</span>   <span class="hljs-number">766.500000</span>  <span class="hljs-number">4.397750e+08</span><br><span class="hljs-comment"># 数据的基本统计情况</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P23-将索引列变为普通索引列"><a href="#P23-将索引列变为普通索引列" class="headerlink" title="P23 将索引列变为普通索引列"></a>P23 将索引列变为普通索引列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># P20里面已经学到了，怎么把csv文件里的第一列作为索引列，使用index_col=0</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>, index_col=<span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 现在要把Date这一列变为普通列</span><br>df.reset_index(inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br><span class="hljs-built_in">print</span>(df.columns)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>      index        Date     Open     High      Low    Close     Volume<br><span class="hljs-number">0</span>         <span class="hljs-number">0</span>  <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">453.800</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">1</span>         <span class="hljs-number">1</span>  <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>  <span class="hljs-number">450.200</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2</span>         <span class="hljs-number">2</span>  <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">476.200</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">3</span>         <span class="hljs-number">3</span>  <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">473.000</span>  <span class="hljs-number">455.200</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">4</span>         <span class="hljs-number">4</span>  <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">473.400</span>  <span class="hljs-number">456.200</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>    ...         ...      ...      ...      ...      ...        ...<br><span class="hljs-number">4262</span>   <span class="hljs-number">4262</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.450</span>    <span class="hljs-number">4.025</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">4263</span>   <span class="hljs-number">4263</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">4264</span>   <span class="hljs-number">4264</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.250</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">4265</span>   <span class="hljs-number">4265</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">4266</span>   <span class="hljs-number">4266</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.625</span>    <span class="hljs-number">4.075</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">7</span> columns]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.columns)<br>Index([<span class="hljs-string">&#x27;index&#x27;</span>, <span class="hljs-string">&#x27;Date&#x27;</span>, <span class="hljs-string">&#x27;Open&#x27;</span>, <span class="hljs-string">&#x27;High&#x27;</span>, <span class="hljs-string">&#x27;Low&#x27;</span>, <span class="hljs-string">&#x27;Close&#x27;</span>, <span class="hljs-string">&#x27;Volume&#x27;</span>], dtype=<span class="hljs-string">&#x27;object&#x27;</span>)<br><br><span class="hljs-comment"># 现在Date变成了普通列，索引有单独的index列了</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P24-通过日期信息，添加年月列"><a href="#P24-通过日期信息，添加年月列" class="headerlink" title="P24 通过日期信息，添加年月列"></a>P24 通过日期信息，添加年月列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><span class="hljs-comment"># 肯定是根据Date列的信息获得每一行对应的年份和月份</span><br><br>df[<span class="hljs-string">&quot;Date&quot;</span>] = pd.to_datetime(df[<span class="hljs-string">&quot;Date&quot;</span>])<br><span class="hljs-comment"># 把数据列通过to_datetime后就可以通过dt访问它的很多属性</span><br>df[<span class="hljs-string">&quot;Year&quot;</span>] = df[<span class="hljs-string">&quot;Date&quot;</span>].dt.year<br>df[<span class="hljs-string">&quot;Month&quot;</span>] = df[<span class="hljs-string">&quot;Date&quot;</span>].dt.month<br><br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>           Date     Open     High      Low    Close     Volume  Year  Month<br><span class="hljs-number">0</span>    <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">453.800</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span>  <span class="hljs-number">2021</span>      <span class="hljs-number">9</span><br><span class="hljs-number">1</span>    <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>  <span class="hljs-number">450.200</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span>  <span class="hljs-number">2021</span>      <span class="hljs-number">9</span><br><span class="hljs-number">2</span>    <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">476.200</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span>  <span class="hljs-number">2021</span>      <span class="hljs-number">9</span><br><span class="hljs-number">3</span>    <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">473.000</span>  <span class="hljs-number">455.200</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span>  <span class="hljs-number">2021</span>      <span class="hljs-number">9</span><br><span class="hljs-number">4</span>    <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">473.400</span>  <span class="hljs-number">456.200</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span>  <span class="hljs-number">2021</span>      <span class="hljs-number">9</span><br><span class="hljs-meta">... </span>        ...      ...      ...      ...      ...        ...   ...    ...<br><span class="hljs-number">4262</span> <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.450</span>    <span class="hljs-number">4.025</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span>  <span class="hljs-number">2004</span>      <span class="hljs-number">6</span><br><span class="hljs-number">4263</span> <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span>  <span class="hljs-number">2004</span>      <span class="hljs-number">6</span><br><span class="hljs-number">4264</span> <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.250</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span>  <span class="hljs-number">2004</span>      <span class="hljs-number">6</span><br><span class="hljs-number">4265</span> <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span>  <span class="hljs-number">2004</span>      <span class="hljs-number">6</span><br><span class="hljs-number">4266</span> <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.625</span>    <span class="hljs-number">4.075</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span>  <span class="hljs-number">2004</span>      <span class="hljs-number">6</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">8</span> columns]<br></code></pre></td></tr></table></figure>
+
+<h2 id="P25-计算每一年的平均收盘价（特定行的某一列的均值）"><a href="#P25-计算每一年的平均收盘价（特定行的某一列的均值）" class="headerlink" title="P25 计算每一年的平均收盘价（特定行的某一列的均值）"></a>P25 计算每一年的平均收盘价（特定行的某一列的均值）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需要计算每一年的平均收盘价，就是需要先筛选某一年的所有行，再计算这些行的Close那一列的均值</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><br>df[<span class="hljs-string">&quot;Date&quot;</span>] = pd.to_datetime(df[<span class="hljs-string">&quot;Date&quot;</span>])<br>df[<span class="hljs-string">&quot;Year&quot;</span>] = df[<span class="hljs-string">&quot;Date&quot;</span>].dt.year<br><br><span class="hljs-comment"># 利用groupby函数对某一列的不同元素进行分组，也就是把Year那一列的归类</span><br><span class="hljs-built_in">print</span>(df.groupby(<span class="hljs-string">&quot;Year&quot;</span>)[<span class="hljs-string">&quot;Close&quot;</span>].mean())<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.groupby(<span class="hljs-string">&quot;Year&quot;</span>)[<span class="hljs-string">&quot;Close&quot;</span>].mean())<br>Year<br><span class="hljs-number">2004</span>      <span class="hljs-number">4.338686</span><br><span class="hljs-number">2005</span>      <span class="hljs-number">6.568927</span><br><span class="hljs-number">2006</span>     <span class="hljs-number">15.865951</span><br><span class="hljs-number">2007</span>     <span class="hljs-number">37.882724</span><br><span class="hljs-number">2008</span>     <span class="hljs-number">54.818367</span><br><span class="hljs-number">2009</span>     <span class="hljs-number">96.369679</span><br><span class="hljs-number">2010</span>    <span class="hljs-number">157.299598</span><br><span class="hljs-number">2011</span>    <span class="hljs-number">189.737398</span><br><span class="hljs-number">2012</span>    <span class="hljs-number">228.987045</span><br><span class="hljs-number">2013</span>    <span class="hljs-number">337.136066</span><br><span class="hljs-number">2014</span>    <span class="hljs-number">271.291498</span><br><span class="hljs-number">2015</span>    <span class="hljs-number">144.824291</span><br><span class="hljs-number">2016</span>    <span class="hljs-number">176.562041</span><br><span class="hljs-number">2017</span>    <span class="hljs-number">291.066667</span><br><span class="hljs-number">2018</span>    <span class="hljs-number">372.678862</span><br><span class="hljs-number">2019</span>    <span class="hljs-number">346.225203</span><br><span class="hljs-number">2020</span>    <span class="hljs-number">479.141129</span><br><span class="hljs-number">2021</span>    <span class="hljs-number">586.649189</span><br>Name: Close, dtype: float64<br><br><span class="hljs-comment">#这样就输出了每年的收盘价（Close）的均值</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P26-找出某列最小值的行"><a href="#P26-找出某列最小值的行" class="headerlink" title="P26 找出某列最小值的行"></a>P26 找出某列最小值的行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;Close&quot;</span>].<span class="hljs-built_in">min</span>()) <span class="hljs-comment"># Close这一列的最小值</span><br><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()) <span class="hljs-comment"># Close最小值的那一行的索引</span><br><span class="hljs-built_in">print</span>(df.loc[df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()]) <span class="hljs-comment"># 根据索引locate那一行 loc不加[]返回series</span><br><span class="hljs-built_in">print</span>(df.loc[[df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()]]) <span class="hljs-comment"># loc加[]返回dataframe</span><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;Close&quot;</span>].<span class="hljs-built_in">min</span>()) <span class="hljs-comment"># Close这一列的最小值</span><br><span class="hljs-number">3.375</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()) <span class="hljs-comment"># Close最小值的那一行的索引</span><br><span class="hljs-number">4240</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.loc[df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()]) <span class="hljs-comment"># 根据索引locate那一行</span><br>Date      <span class="hljs-number">2004</span>-07-<span class="hljs-number">26</span><br>Open            <span class="hljs-number">3.45</span><br>High             <span class="hljs-number">3.5</span><br>Low            <span class="hljs-number">3.375</span><br>Close          <span class="hljs-number">3.375</span><br>Volume       <span class="hljs-number">7439000</span><br>Name: <span class="hljs-number">4240</span>, dtype: <span class="hljs-built_in">object</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.loc[[df[<span class="hljs-string">&quot;Close&quot;</span>].argmin()]]) <span class="hljs-comment"># loc加[]返回dataframe</span><br>            Date  Open  High    Low  Close   Volume<br><span class="hljs-number">4240</span>  <span class="hljs-number">2004</span>-07-<span class="hljs-number">26</span>  <span class="hljs-number">3.45</span>   <span class="hljs-number">3.5</span>  <span class="hljs-number">3.375</span>  <span class="hljs-number">3.375</span>  <span class="hljs-number">7439000</span><br></code></pre></td></tr></table></figure>
+
+<p>问题是：如果最小值在多行出现了，argmin似乎只会返回其中的第一行，需要返回所有包含最小值的行怎么办？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 利用条件进行筛选</span><br><span class="hljs-built_in">print</span>(df[df[<span class="hljs-string">&#x27;Close&#x27;</span>] ==  df[<span class="hljs-string">&#x27;Close&#x27;</span>].<span class="hljs-built_in">min</span>()])<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 为了演示多行结果，我手动添加了Close列为3.375的两行，看看结果</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df[df[<span class="hljs-string">&#x27;Close&#x27;</span>] ==  df[<span class="hljs-string">&#x27;Close&#x27;</span>].<span class="hljs-built_in">min</span>()])<br>            Date   Open   High    Low  Close     Volume<br><span class="hljs-number">4240</span>  <span class="hljs-number">2004</span>-07-<span class="hljs-number">26</span>  <span class="hljs-number">3.450</span>  <span class="hljs-number">3.500</span>  <span class="hljs-number">3.375</span>  <span class="hljs-number">3.375</span>    <span class="hljs-number">7439000</span><br><span class="hljs-number">4267</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>  <span class="hljs-number">4.375</span>  <span class="hljs-number">4.625</span>  <span class="hljs-number">4.075</span>  <span class="hljs-number">3.375</span>  <span class="hljs-number">439775000</span><br><span class="hljs-number">4268</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>  <span class="hljs-number">4.375</span>  <span class="hljs-number">4.625</span>  <span class="hljs-number">4.075</span>  <span class="hljs-number">3.375</span>  <span class="hljs-number">439775000</span><br><span class="hljs-comment"># 事实证明，直接条件筛选也可以</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P27-筛选部分数据列"><a href="#P27-筛选部分数据列" class="headerlink" title="P27 筛选部分数据列"></a>P27 筛选部分数据列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><br><span class="hljs-comment"># 假如只要某几列</span><br><span class="hljs-built_in">print</span>(df[[<span class="hljs-string">&quot;Date&quot;</span>,<span class="hljs-string">&quot;Open&quot;</span>,<span class="hljs-string">&quot;Close&quot;</span>,<span class="hljs-string">&quot;Volume&quot;</span>]])<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df[[<span class="hljs-string">&quot;Date&quot;</span>,<span class="hljs-string">&quot;Open&quot;</span>,<span class="hljs-string">&quot;Close&quot;</span>,<span class="hljs-string">&quot;Volume&quot;</span>]])<br>            Date     Open    Close     Volume<br><span class="hljs-number">0</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">1</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">3</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">4</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>         ...      ...      ...        ...<br><span class="hljs-number">4262</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">4263</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">4264</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">4265</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">4266</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">4</span> columns]<br></code></pre></td></tr></table></figure>
+
+<h2 id="P28-将Date设为索引列"><a href="#P28-将Date设为索引列" class="headerlink" title="P28 将Date设为索引列"></a>P28 将Date设为索引列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><br><span class="hljs-comment"># 假如只要某几列</span><br>df.set_index(<span class="hljs-string">&quot;Date&quot;</span>, inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>               Open     High      Low    Close     Volume<br>Date                                                     <br><span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">453.800</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>  <span class="hljs-number">450.200</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">476.200</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">473.000</span>  <span class="hljs-number">455.200</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">473.400</span>  <span class="hljs-number">456.200</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>            ...      ...      ...      ...        ...<br><span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.450</span>    <span class="hljs-number">4.025</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.250</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.625</span>    <span class="hljs-number">4.075</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">5</span> columns]<br></code></pre></td></tr></table></figure>
+
+<h2 id="P29-删除不需要的数据列"><a href="#P29-删除不需要的数据列" class="headerlink" title="P29 删除不需要的数据列"></a>P29 删除不需要的数据列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><br><span class="hljs-comment"># 删除High和Low</span><br>df.drop(columns=[<span class="hljs-string">&quot;High&quot;</span>, <span class="hljs-string">&quot;Low&quot;</span>], inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>            Date     Open    Close     Volume<br><span class="hljs-number">0</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">1</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">3</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">4</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>         ...      ...      ...        ...<br><span class="hljs-number">4262</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">4263</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">4264</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">4265</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">4266</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">4</span> columns]<br></code></pre></td></tr></table></figure>
+
+<h2 id="P30-对列名进行重命名"><a href="#P30-对列名进行重命名" class="headerlink" title="P30 对列名进行重命名"></a>P30 对列名进行重命名</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&#x27;/Users/emmett/Downloads/00700.HK.csv&#x27;</span>)<br><br><span class="hljs-comment"># 方法一：直接覆盖列名，缺点是全部重命名，不想重命名的只能维持不变</span><br>df.columns = [<span class="hljs-string">&quot;D&quot;</span>,<span class="hljs-string">&quot;O&quot;</span>,<span class="hljs-string">&quot;H&quot;</span>,<span class="hljs-string">&quot;L&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-string">&quot;V&quot;</span>]<br><span class="hljs-built_in">print</span>(df)<br><br><span class="hljs-comment"># 方法二：利用rename和字典传回修改规则，可以只修改部分，现在用这个办法把列名改回去，但是D和V不变</span><br>df.rename(columns=&#123;<span class="hljs-string">&quot;O&quot;</span>:<span class="hljs-string">&quot;Open&quot;</span>, <span class="hljs-string">&quot;H&quot;</span>:<span class="hljs-string">&quot;High&quot;</span>, <span class="hljs-string">&quot;L&quot;</span>:<span class="hljs-string">&quot;Low&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>:<span class="hljs-string">&quot;Close&quot;</span>&#125;, inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-comment"># 方法一：直接覆盖列名，缺点是全部重命名，不想重命名的只能维持不变</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>df.columns = [<span class="hljs-string">&quot;D&quot;</span>,<span class="hljs-string">&quot;O&quot;</span>,<span class="hljs-string">&quot;H&quot;</span>,<span class="hljs-string">&quot;L&quot;</span>,<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-string">&quot;V&quot;</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>               D        O        H        L        C          V<br><span class="hljs-number">0</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">453.800</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">1</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>  <span class="hljs-number">450.200</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">476.200</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">3</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">473.000</span>  <span class="hljs-number">455.200</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">4</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">473.400</span>  <span class="hljs-number">456.200</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>         ...      ...      ...      ...      ...        ...<br><span class="hljs-number">4262</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.450</span>    <span class="hljs-number">4.025</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">4263</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">4264</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.250</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">4265</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">4266</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.625</span>    <span class="hljs-number">4.075</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">6</span> columns]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-comment"># 方法二：利用rename和字典传回修改规则，可以只修改部分，现在用这个办法把列名改回去，但是D和V不变</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>df.rename(columns=&#123;<span class="hljs-string">&quot;O&quot;</span>:<span class="hljs-string">&quot;Open&quot;</span>, <span class="hljs-string">&quot;H&quot;</span>:<span class="hljs-string">&quot;High&quot;</span>, <span class="hljs-string">&quot;L&quot;</span>:<span class="hljs-string">&quot;Low&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>:<span class="hljs-string">&quot;Close&quot;</span>&#125;, inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>               D     Open     High      Low    Close          V<br><span class="hljs-number">0</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">30</span>  <span class="hljs-number">456.000</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">453.800</span>  <span class="hljs-number">461.400</span>   <span class="hljs-number">17335451</span><br><span class="hljs-number">1</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">29</span>  <span class="hljs-number">461.600</span>  <span class="hljs-number">465.000</span>  <span class="hljs-number">450.200</span>  <span class="hljs-number">465.000</span>   <span class="hljs-number">18250450</span><br><span class="hljs-number">2</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">28</span>  <span class="hljs-number">467.000</span>  <span class="hljs-number">476.200</span>  <span class="hljs-number">464.600</span>  <span class="hljs-number">469.800</span>   <span class="hljs-number">20947276</span><br><span class="hljs-number">3</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">27</span>  <span class="hljs-number">459.000</span>  <span class="hljs-number">473.000</span>  <span class="hljs-number">455.200</span>  <span class="hljs-number">464.600</span>   <span class="hljs-number">17966998</span><br><span class="hljs-number">4</span>     <span class="hljs-number">2021</span>-09-<span class="hljs-number">24</span>  <span class="hljs-number">461.400</span>  <span class="hljs-number">473.400</span>  <span class="hljs-number">456.200</span>  <span class="hljs-number">460.200</span>   <span class="hljs-number">16656914</span><br><span class="hljs-meta">... </span>         ...      ...      ...      ...      ...        ...<br><span class="hljs-number">4262</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">23</span>    <span class="hljs-number">4.050</span>    <span class="hljs-number">4.450</span>    <span class="hljs-number">4.025</span>    <span class="hljs-number">4.425</span>   <span class="hljs-number">55016000</span><br><span class="hljs-number">4263</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">21</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.000</span>   <span class="hljs-number">22817000</span><br><span class="hljs-number">4264</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">18</span>    <span class="hljs-number">4.200</span>    <span class="hljs-number">4.250</span>    <span class="hljs-number">3.950</span>    <span class="hljs-number">4.025</span>   <span class="hljs-number">36598000</span><br><span class="hljs-number">4265</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">17</span>    <span class="hljs-number">4.150</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.125</span>    <span class="hljs-number">4.225</span>   <span class="hljs-number">83801500</span><br><span class="hljs-number">4266</span>  <span class="hljs-number">2004</span>-06-<span class="hljs-number">16</span>    <span class="hljs-number">4.375</span>    <span class="hljs-number">4.625</span>    <span class="hljs-number">4.075</span>    <span class="hljs-number">4.150</span>  <span class="hljs-number">439775000</span><br><br>[<span class="hljs-number">4267</span> rows x <span class="hljs-number">6</span> columns]<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Pandas/" class="category-chain-item">Pandas</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作</div>
+      <div>https://emmettpeng.github.io/2023/11/15/pandas-base-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Emmett Peng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 15, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/21/wordpress%E4%B8%8A%E4%BC%A0%E9%99%90%E5%88%B6/" title="直接通过php解决wordpress上传文件大小限制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">直接通过php解决wordpress上传文件大小限制</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/01/pandas-base/" title="Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作">
+                        <span class="hidden-mobile">Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"YeHkpbZBcgEvVDUhALlkAvpl-MdYXbMMI","appKey":"jtxg2UEr7vvpFAljpNrl6Y1V","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://yehkpbzb.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

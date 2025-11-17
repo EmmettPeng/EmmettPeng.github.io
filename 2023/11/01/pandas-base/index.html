@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page_avatar.png">
+  <link rel="icon" href="/img/page_avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Emmett Peng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Pandas入门笔记从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。主要参考了bilibili的up主@蚂蚁学python的视频Python Pandas 数据分析，编程练习100例和W3Cschool的Pandas中文教程。 P1 From list to series12345678# From list to seri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作">
+<meta property="og:url" content="https://emmettpeng.github.io/2023/11/01/pandas-base/index.html">
+<meta property="og:site_name" content="Emmett&#39;s Note">
+<meta property="og:description" content="Pandas入门笔记从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。主要参考了bilibili的up主@蚂蚁学python的视频Python Pandas 数据分析，编程练习100例和W3Cschool的Pandas中文教程。 P1 From list to series12345678# From list to seri">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-01T14:19:36.000Z">
+<meta property="article:modified_time" content="2023-11-15T14:04:44.960Z">
+<meta property="article:author" content="Emmett Peng">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作 - Emmett&#39;s Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"emmettpeng.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>emmett&#39;s notebook</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-01 22:19" pubdate>
+          November 1, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          114 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Pandas入门笔记"><a href="#Pandas入门笔记" class="headerlink" title="Pandas入门笔记"></a>Pandas入门笔记</h1><p>从今天开始更新Pandas基础语法笔记，之前一直都是零零散散的用的，打算每天花一段时间系统记录一下pandas的基本语法。<br>主要参考了bilibili的up主<a target="_blank" rel="noopener" href="https://space.bilibili.com/61036655">@蚂蚁学python</a>的视频<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Nq4y1Z7Q8?p=4&vd_source=708323e5553f1c0b8879d3d65a98b898">Python Pandas 数据分析，编程练习100例</a>和<a target="_blank" rel="noopener" href="https://www.w3cschool.cn/hyspo/">W3Cschool的Pandas中文教程</a>。</p>
+<h2 id="P1-From-list-to-series"><a href="#P1-From-list-to-series" class="headerlink" title="P1 From list to series"></a>P1 From list to series</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># From list to series / 由list构造pandas series</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>courses = [<span class="hljs-string">&quot;Chinese&quot;</span>, <span class="hljs-string">&quot;Math&quot;</span>, <span class="hljs-string">&quot;English&quot;</span>, <span class="hljs-string">&quot;Chemistry&quot;</span>]<br><span class="hljs-comment">#courses_series = pd.Series(data=courses)</span><br>courses_series = pd.Series(courses)<br><br><span class="hljs-built_in">print</span>(courses_series)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(courses_series)<br><span class="hljs-number">0</span>      Chinese<br><span class="hljs-number">1</span>         Math<br><span class="hljs-number">2</span>      English<br><span class="hljs-number">3</span>    Chemistry<br>dtype: <span class="hljs-built_in">object</span><br><br><span class="hljs-comment"># 注意：index为默认的数字索引~</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P2-From-dictionary-to-series"><a href="#P2-From-dictionary-to-series" class="headerlink" title="P2 From dictionary to series"></a>P2 From dictionary to series</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># From dictionary to series / 由dictionary构造pandas series</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>grades = &#123;<span class="hljs-string">&quot;Chinese&quot;</span>: <span class="hljs-number">92</span>, <span class="hljs-string">&quot;Math&quot;</span>: <span class="hljs-number">95</span>, <span class="hljs-string">&quot;English&quot;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&quot;Chemistry&quot;</span>: <span class="hljs-number">98</span>&#125;<br><span class="hljs-comment">#grades_series = pd.Series(data=grades)</span><br>grades_series = pd.Series(grades)<br><br><span class="hljs-built_in">print</span>(grades_series)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs axapta">&gt;&gt;&gt; <span class="hljs-keyword">print</span>(grades_series)<br>Chinese       <span class="hljs-number">92</span><br>Math          <span class="hljs-number">95</span><br>English      <span class="hljs-number">100</span><br>Chemistry     <span class="hljs-number">98</span><br>dtype: <span class="hljs-built_in">int64</span><br><br><span class="hljs-meta"># 注意：此时，字典中的键成为了索引，相应的值成为了Series的数据列。</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P3-From-series-to-list-从series变回list"><a href="#P3-From-series-to-list-从series变回list" class="headerlink" title="P3 From series to list &#x2F; 从series变回list"></a>P3 From series to list &#x2F; 从series变回list</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># From series to list / 从series变回list</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>grades = &#123;<span class="hljs-string">&quot;Chinese&quot;</span>: <span class="hljs-number">92</span>, <span class="hljs-string">&quot;Math&quot;</span>: <span class="hljs-number">95</span>, <span class="hljs-string">&quot;English&quot;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&quot;Chemistry&quot;</span>: <span class="hljs-number">98</span>&#125;<br>grades_series = pd.Series(grades)<br><br>grades_original = grades_series.to_list()<br><span class="hljs-built_in">print</span>(grades_original)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(grades_original)<br>[<span class="hljs-number">92</span>, <span class="hljs-number">95</span>, <span class="hljs-number">100</span>, <span class="hljs-number">98</span>]<br><br><span class="hljs-comment"># 仅保留了数据列（字典里的值）</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P4-From-series-to-dataframe-从series转为dataframe"><a href="#P4-From-series-to-dataframe-从series转为dataframe" class="headerlink" title="P4 From series to dataframe &#x2F; 从series转为dataframe"></a>P4 From series to dataframe &#x2F; 从series转为dataframe</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># From series to dataframe / 从series变回dataframe</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>grades = &#123;<span class="hljs-string">&quot;Chinese&quot;</span>: <span class="hljs-number">92</span>, <span class="hljs-string">&quot;Math&quot;</span>: <span class="hljs-number">95</span>, <span class="hljs-string">&quot;English&quot;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&quot;Chemistry&quot;</span>: <span class="hljs-number">98</span>&#125;<br>grades_series = pd.Series(grades)<br><br>grades_df = pd.DataFrame(grades_series, columns=[<span class="hljs-string">&#x27;grade&#x27;</span>])<br><span class="hljs-built_in">print</span>(grades_df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache">           <span class="hljs-attribute">grade</span><br><span class="hljs-attribute">Chinese</span>       <span class="hljs-number">92</span><br><span class="hljs-attribute">Math</span>          <span class="hljs-number">95</span><br><span class="hljs-attribute">English</span>      <span class="hljs-number">100</span><br><span class="hljs-attribute">Chemistry</span>     <span class="hljs-number">98</span><br><br><span class="hljs-comment"># 列名是通过columns=[&#x27;grade&#x27;]手动加上的</span><br></code></pre></td></tr></table></figure>
+
+<p>思考：如果这里需要把索引列的列名（比如<code>&#39;subject&#39;</code>）也加上：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">grades_df = grades_series.reset_index() <span class="hljs-comment"># 将列名转化为普通list</span><br>grades_df.columns = [<span class="hljs-string">&#x27;subject&#x27;</span>, <span class="hljs-string">&#x27;grade&#x27;</span>] <span class="hljs-comment"># 修改列名</span><br><br><span class="hljs-built_in">print</span>(grades_df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache">     <span class="hljs-attribute">subject</span>  grade<br><span class="hljs-attribute">0</span>    Chinese     <span class="hljs-number">92</span><br><span class="hljs-attribute">1</span>       Math     <span class="hljs-number">95</span><br><span class="hljs-attribute">2</span>    English    <span class="hljs-number">100</span><br><span class="hljs-attribute">3</span>  Chemistry     <span class="hljs-number">98</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P5-Create-series-using-numpy"><a href="#P5-Create-series-using-numpy" class="headerlink" title="P5 Create series using numpy"></a>P5 Create series using numpy</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建一个长度为9的pandas series，要求索引为101-109，数据值为10-90，数据类型为float</span><br><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>s = pd.Series(<br>    np.arange(<span class="hljs-number">10</span>,<span class="hljs-number">100</span>,<span class="hljs-number">10</span>), <span class="hljs-comment"># 省略了data=, arange(start, stop, step)</span><br>    index=np.arange(<span class="hljs-number">101</span>,<span class="hljs-number">110</span>),<br>    dtype=<span class="hljs-string">&#x27;float&#x27;</span><br>)<br><br><span class="hljs-built_in">print</span>(s)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(s)<br><span class="hljs-number">101</span>    <span class="hljs-number">10.0</span><br><span class="hljs-number">102</span>    <span class="hljs-number">20.0</span><br><span class="hljs-number">103</span>    <span class="hljs-number">30.0</span><br><span class="hljs-number">104</span>    <span class="hljs-number">40.0</span><br><span class="hljs-number">105</span>    <span class="hljs-number">50.0</span><br><span class="hljs-number">106</span>    <span class="hljs-number">60.0</span><br><span class="hljs-number">107</span>    <span class="hljs-number">70.0</span><br><span class="hljs-number">108</span>    <span class="hljs-number">80.0</span><br><span class="hljs-number">109</span>    <span class="hljs-number">90.0</span><br>dtype: float64<br></code></pre></td></tr></table></figure>
+
+<h2 id="P6-Change-datatype-in-pandas-series"><a href="#P6-Change-datatype-in-pandas-series" class="headerlink" title="P6 Change datatype in pandas series"></a>P6 Change datatype in pandas series</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>s1 = pd.Series(<br>    data = [<span class="hljs-string">&quot;123&quot;</span>, <span class="hljs-string">&quot;456&quot;</span>, <span class="hljs-string">&quot;789&quot;</span>],<br>    index = <span class="hljs-built_in">list</span>(<span class="hljs-string">&#x27;abc&#x27;</span>)<br>)<br><br><span class="hljs-comment"># 要求将data列的string转化为整型数字int</span><br><br>s2 = s1.astype(<span class="hljs-built_in">int</span>)   <span class="hljs-comment">#也可以用s2 = s1.map(int)</span><br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>s1<br>a    <span class="hljs-number">123</span><br>b    <span class="hljs-number">456</span><br>c    <span class="hljs-number">789</span><br>dtype: <span class="hljs-built_in">object</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>s2<br>a    <span class="hljs-number">123</span><br>b    <span class="hljs-number">456</span><br>c    <span class="hljs-number">789</span><br>dtype: int64 <span class="hljs-comment"># 数据类型已经从object转成了int64</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P7-Append-elements-to-series"><a href="#P7-Append-elements-to-series" class="headerlink" title="P7 Append elements to series"></a>P7 Append elements to series</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>grades = &#123;<span class="hljs-string">&quot;Chinese&quot;</span>: <span class="hljs-number">92</span>, <span class="hljs-string">&quot;Math&quot;</span>: <span class="hljs-number">95</span>, <span class="hljs-string">&quot;English&quot;</span>: <span class="hljs-number">100</span>, <span class="hljs-string">&quot;Chemistry&quot;</span>: <span class="hljs-number">98</span>&#125;<br>grades_series = pd.Series(grades)<br><br><span class="hljs-comment">## 现在要再加两门课 Biology 和 Spanish 的成绩</span><br>new_grades_series = grades_series.append(<br>    pd.Series(&#123;<span class="hljs-string">&quot;Biology&quot;</span>: <span class="hljs-number">99</span>, <span class="hljs-string">&quot;Spanish&quot;</span>: <span class="hljs-number">96</span>&#125;)<br>)<br><span class="hljs-built_in">print</span>(new_grades_series)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>new_grades_series = grades_series.append(<br><span class="hljs-meta">... </span>    pd.Series(&#123;<span class="hljs-string">&quot;Biology&quot;</span>: <span class="hljs-number">99</span>, <span class="hljs-string">&quot;Spanish&quot;</span>: <span class="hljs-number">96</span>&#125;)<br><span class="hljs-meta">... </span>)<br>&lt;stdin&gt;:<span class="hljs-number">1</span>: FutureWarning: The series.append method <span class="hljs-keyword">is</span> deprecated <span class="hljs-keyword">and</span> will be removed <span class="hljs-keyword">from</span> pandas <span class="hljs-keyword">in</span> a future version. Use pandas.concat instead.<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(new_grades_series)<br>Chinese       <span class="hljs-number">92</span><br>Math          <span class="hljs-number">95</span><br>English      <span class="hljs-number">100</span><br>Chemistry     <span class="hljs-number">98</span><br>Biology       <span class="hljs-number">99</span><br>Spanish       <span class="hljs-number">96</span><br>dtype: int64<br><br><span class="hljs-comment"># 提出了警告，认为series.append功能过时，该功能确实可以通过series的concat函数完成。</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P8-Reset-index"><a href="#P8-Reset-index" class="headerlink" title="P8 Reset_index"></a>P8 Reset_index</h2><p>See: <a href="#P4-From-series-to-dataframe-%E4%BB%8Eseries%E8%BD%AC%E4%B8%BAdataframe">P4 From series to dataframe &#x2F; 从series转为dataframe</a></p>
+<h2 id="P9-From-dictionary-to-dataframe"><a href="#P9-From-dictionary-to-dataframe" class="headerlink" title="P9 From dictionary to dataframe"></a>P9 From dictionary to dataframe</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.DataFrame(<br>    &#123;<br>        <span class="hljs-string">&quot;Abbr&quot;</span>: [<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;T&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;G&quot;</span>],<br>        <span class="hljs-string">&quot;Nucleotide&quot;</span>: [<span class="hljs-string">&quot;Adenine&quot;</span>, <span class="hljs-string">&quot;Thymine&quot;</span>, <span class="hljs-string">&quot;Guanine&quot;</span>, <span class="hljs-string">&quot;Cytosine&quot;</span>],<br>        <span class="hljs-string">&quot;Chinese Name&quot;</span>: [<span class="hljs-string">&quot;腺嘌呤&quot;</span>, <span class="hljs-string">&quot;胸腺嘧啶&quot;</span>, <span class="hljs-string">&quot;鸟嘌呤&quot;</span>, <span class="hljs-string">&quot;胞嘧啶&quot;</span>],<br>        <span class="hljs-string">&quot;Count&quot;</span>: [<span class="hljs-number">43442</span>,<span class="hljs-number">52452</span>,<span class="hljs-number">21342</span>,<span class="hljs-number">23323</span>]<br>    &#125;<br>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">&gt;&gt;&gt; <span class="hljs-built_in">print</span>(df)<br>  Abbr Nucleotide Chinese <span class="hljs-keyword">Name</span>  <span class="hljs-built_in">Count</span><br><span class="hljs-number">0</span>    A    Adenine          腺嘌呤  <span class="hljs-number">43442</span><br><span class="hljs-number">1</span>    T    Thymine         胸腺嘧啶  <span class="hljs-number">52452</span><br><span class="hljs-number">2</span>    C    Guanine          鸟嘌呤  <span class="hljs-number">21342</span><br><span class="hljs-number">3</span>    G   Cytosine          胞嘧啶  <span class="hljs-number">23323</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P10-Set-index-for-dataframe"><a href="#P10-Set-index-for-dataframe" class="headerlink" title="P10 Set index for dataframe"></a>P10 Set index for dataframe</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 上一题的索引列是数字索引，现在想默认使用Abbr作为索引</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.DataFrame(<br>    &#123;<br>        <span class="hljs-string">&quot;Abbr&quot;</span>: [<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;T&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;G&quot;</span>],<br>        <span class="hljs-string">&quot;Nucleotide&quot;</span>: [<span class="hljs-string">&quot;Adenine&quot;</span>, <span class="hljs-string">&quot;Thymine&quot;</span>, <span class="hljs-string">&quot;Guanine&quot;</span>, <span class="hljs-string">&quot;Cytosine&quot;</span>],<br>        <span class="hljs-string">&quot;Chinese Name&quot;</span>: [<span class="hljs-string">&quot;腺嘌呤&quot;</span>, <span class="hljs-string">&quot;胸腺嘧啶&quot;</span>, <span class="hljs-string">&quot;鸟嘌呤&quot;</span>, <span class="hljs-string">&quot;胞嘧啶&quot;</span>],<br>        <span class="hljs-string">&quot;Count&quot;</span>: [<span class="hljs-number">43442</span>,<span class="hljs-number">52452</span>,<span class="hljs-number">21342</span>,<span class="hljs-number">23323</span>]<br>    &#125;<br>)<br><br>df.set_index(<span class="hljs-string">&quot;Abbr&quot;</span>, inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>     Nucleotide Chinese Name  Count<br>Abbr                               <br>A       Adenine          腺嘌呤  <span class="hljs-number">43442</span><br>T       Thymine         胸腺嘧啶  <span class="hljs-number">52452</span><br>C       Guanine          鸟嘌呤  <span class="hljs-number">21342</span><br>G      Cytosine          胞嘧啶  <span class="hljs-number">23323</span><br><br><span class="hljs-comment"># 现在的索引列就是Abbr了</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P11-Generate-datetime-index-A-month"><a href="#P11-Generate-datetime-index-A-month" class="headerlink" title="P11 Generate datetime index (A month)"></a>P11 Generate datetime index (A month)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>date_range = pd.date_range(start=<span class="hljs-string">&#x27;2023-11-01&#x27;</span>, end=<span class="hljs-string">&#x27;2023-11-30&#x27;</span>)<br><span class="hljs-comment"># 测试证明：这个1号写01或者只写1都可以</span><br><span class="hljs-built_in">print</span>(date_range)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(date_range)<br>DatetimeIndex([<span class="hljs-string">&#x27;2023-11-01&#x27;</span>, <span class="hljs-string">&#x27;2023-11-02&#x27;</span>, <span class="hljs-string">&#x27;2023-11-03&#x27;</span>, <span class="hljs-string">&#x27;2023-11-04&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-05&#x27;</span>, <span class="hljs-string">&#x27;2023-11-06&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07&#x27;</span>, <span class="hljs-string">&#x27;2023-11-08&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-09&#x27;</span>, <span class="hljs-string">&#x27;2023-11-10&#x27;</span>, <span class="hljs-string">&#x27;2023-11-11&#x27;</span>, <span class="hljs-string">&#x27;2023-11-12&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-13&#x27;</span>, <span class="hljs-string">&#x27;2023-11-14&#x27;</span>, <span class="hljs-string">&#x27;2023-11-15&#x27;</span>, <span class="hljs-string">&#x27;2023-11-16&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-17&#x27;</span>, <span class="hljs-string">&#x27;2023-11-18&#x27;</span>, <span class="hljs-string">&#x27;2023-11-19&#x27;</span>, <span class="hljs-string">&#x27;2023-11-20&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-21&#x27;</span>, <span class="hljs-string">&#x27;2023-11-22&#x27;</span>, <span class="hljs-string">&#x27;2023-11-23&#x27;</span>, <span class="hljs-string">&#x27;2023-11-24&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-25&#x27;</span>, <span class="hljs-string">&#x27;2023-11-26&#x27;</span>, <span class="hljs-string">&#x27;2023-11-27&#x27;</span>, <span class="hljs-string">&#x27;2023-11-28&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-29&#x27;</span>, <span class="hljs-string">&#x27;2023-11-30&#x27;</span>],<br>              dtype=<span class="hljs-string">&#x27;datetime64[ns]&#x27;</span>, freq=<span class="hljs-string">&#x27;D&#x27;</span>)<br><br><span class="hljs-comment">#数据类型是 datetime</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P12-Generate-datetime-index-Every-Monday-in-a-year"><a href="#P12-Generate-datetime-index-Every-Monday-in-a-year" class="headerlink" title="P12 Generate datetime index (Every Monday in a year)"></a>P12 Generate datetime index (Every Monday in a year)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>date_range = pd.date_range(start=<span class="hljs-string">&#x27;2023-1-1&#x27;</span>, end=<span class="hljs-string">&#x27;2023-12-31&#x27;</span>, freq=<span class="hljs-string">&#x27;W-MON&#x27;</span>)<br><span class="hljs-comment"># W-MON: W means weekly frequency; MON means monday</span><br><br><span class="hljs-built_in">print</span>(date_range)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(date_range)<br>DatetimeIndex([<span class="hljs-string">&#x27;2023-01-02&#x27;</span>, <span class="hljs-string">&#x27;2023-01-09&#x27;</span>, <span class="hljs-string">&#x27;2023-01-16&#x27;</span>, <span class="hljs-string">&#x27;2023-01-23&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-01-30&#x27;</span>, <span class="hljs-string">&#x27;2023-02-06&#x27;</span>, <span class="hljs-string">&#x27;2023-02-13&#x27;</span>, <span class="hljs-string">&#x27;2023-02-20&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-02-27&#x27;</span>, <span class="hljs-string">&#x27;2023-03-06&#x27;</span>, <span class="hljs-string">&#x27;2023-03-13&#x27;</span>, <span class="hljs-string">&#x27;2023-03-20&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-03-27&#x27;</span>, <span class="hljs-string">&#x27;2023-04-03&#x27;</span>, <span class="hljs-string">&#x27;2023-04-10&#x27;</span>, <span class="hljs-string">&#x27;2023-04-17&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-04-24&#x27;</span>, <span class="hljs-string">&#x27;2023-05-01&#x27;</span>, <span class="hljs-string">&#x27;2023-05-08&#x27;</span>, <span class="hljs-string">&#x27;2023-05-15&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-05-22&#x27;</span>, <span class="hljs-string">&#x27;2023-05-29&#x27;</span>, <span class="hljs-string">&#x27;2023-06-05&#x27;</span>, <span class="hljs-string">&#x27;2023-06-12&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-06-19&#x27;</span>, <span class="hljs-string">&#x27;2023-06-26&#x27;</span>, <span class="hljs-string">&#x27;2023-07-03&#x27;</span>, <span class="hljs-string">&#x27;2023-07-10&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-07-17&#x27;</span>, <span class="hljs-string">&#x27;2023-07-24&#x27;</span>, <span class="hljs-string">&#x27;2023-07-31&#x27;</span>, <span class="hljs-string">&#x27;2023-08-07&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-08-14&#x27;</span>, <span class="hljs-string">&#x27;2023-08-21&#x27;</span>, <span class="hljs-string">&#x27;2023-08-28&#x27;</span>, <span class="hljs-string">&#x27;2023-09-04&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-09-11&#x27;</span>, <span class="hljs-string">&#x27;2023-09-18&#x27;</span>, <span class="hljs-string">&#x27;2023-09-25&#x27;</span>, <span class="hljs-string">&#x27;2023-10-02&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-10-09&#x27;</span>, <span class="hljs-string">&#x27;2023-10-16&#x27;</span>, <span class="hljs-string">&#x27;2023-10-23&#x27;</span>, <span class="hljs-string">&#x27;2023-10-30&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-06&#x27;</span>, <span class="hljs-string">&#x27;2023-11-13&#x27;</span>, <span class="hljs-string">&#x27;2023-11-20&#x27;</span>, <span class="hljs-string">&#x27;2023-11-27&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-12-04&#x27;</span>, <span class="hljs-string">&#x27;2023-12-11&#x27;</span>, <span class="hljs-string">&#x27;2023-12-18&#x27;</span>, <span class="hljs-string">&#x27;2023-12-25&#x27;</span>],<br>              dtype=<span class="hljs-string">&#x27;datetime64[ns]&#x27;</span>, freq=<span class="hljs-string">&#x27;W-MON&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="P13-Generate-datetime-index-All-hours-in-a-day"><a href="#P13-Generate-datetime-index-All-hours-in-a-day" class="headerlink" title="P13 Generate datetime index (All hours in a day)"></a>P13 Generate datetime index (All hours in a day)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>date_range = pd.date_range(start=<span class="hljs-string">&#x27;2023-11-7&#x27;</span>, periods = <span class="hljs-number">24</span>, freq=<span class="hljs-string">&#x27;H&#x27;</span>)<br><span class="hljs-comment"># H: H means hourly</span><br><br><span class="hljs-comment"># Another</span><br><span class="hljs-comment"># date_range = pd.date_range(start=&#x27;2023-11-7&#x27;, end=&#x27;2023-11-8&#x27;, freq=&#x27;H&#x27;, inclusive=&#x27;left&#x27;)</span><br><span class="hljs-comment"># inclusive=&#x27;left&#x27; 左闭右开</span><br><br><span class="hljs-built_in">print</span>(date_range)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(date_range)<br>DatetimeIndex([<span class="hljs-string">&#x27;2023-11-07 00:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 01:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 02:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 03:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 04:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 05:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 06:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 07:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 08:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 09:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 10:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 11:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 12:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 13:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 14:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 15:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 16:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 17:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 18:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 19:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 20:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 21:00:00&#x27;</span>,<br>               <span class="hljs-string">&#x27;2023-11-07 22:00:00&#x27;</span>, <span class="hljs-string">&#x27;2023-11-07 23:00:00&#x27;</span>],<br>              dtype=<span class="hljs-string">&#x27;datetime64[ns]&#x27;</span>, freq=<span class="hljs-string">&#x27;H&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="P14-Generate-Datetime-in-Dataframe"><a href="#P14-Generate-Datetime-in-Dataframe" class="headerlink" title="P14 Generate Datetime in Dataframe"></a>P14 Generate Datetime in Dataframe</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>date_range = pd.date_range(start=<span class="hljs-string">&#x27;2023-11-1&#x27;</span>, periods = <span class="hljs-number">31</span>)<br><br><span class="hljs-comment"># 生成一个df，然后获得该DateTimeIndex里面的列表作为df的一列</span><br><br>df = pd.DataFrame(data=date_range, columns=[<span class="hljs-string">&#x27;day&#x27;</span>])<br><br>df[<span class="hljs-string">&#x27;day of the year&#x27;</span>] = df[<span class="hljs-string">&#x27;day&#x27;</span>].dt.dayofyear<br><span class="hljs-comment">#df[&#x27;day&#x27;]这一列是时间类型，可以用.dt访问日期，dayofyear是固有属性，表示一年中的第几天</span><br><br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>          day  day of the year<br><span class="hljs-number">0</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-01              <span class="hljs-number">305</span><br><span class="hljs-number">1</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-02              <span class="hljs-number">306</span><br><span class="hljs-number">2</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-03              <span class="hljs-number">307</span><br><span class="hljs-number">3</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-04              <span class="hljs-number">308</span><br><span class="hljs-number">4</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-05              <span class="hljs-number">309</span><br><span class="hljs-number">5</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-06              <span class="hljs-number">310</span><br><span class="hljs-number">6</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-07              <span class="hljs-number">311</span><br><span class="hljs-number">7</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-08              <span class="hljs-number">312</span><br><span class="hljs-number">8</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-09              <span class="hljs-number">313</span><br><span class="hljs-number">9</span>  <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">10</span>              <span class="hljs-number">314</span><br><span class="hljs-number">10</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">11</span>              <span class="hljs-number">315</span><br><span class="hljs-number">11</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">12</span>              <span class="hljs-number">316</span><br><span class="hljs-number">12</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">13</span>              <span class="hljs-number">317</span><br><span class="hljs-number">13</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">14</span>              <span class="hljs-number">318</span><br><span class="hljs-number">14</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">15</span>              <span class="hljs-number">319</span><br><span class="hljs-number">15</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">16</span>              <span class="hljs-number">320</span><br><span class="hljs-number">16</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">17</span>              <span class="hljs-number">321</span><br><span class="hljs-number">17</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">18</span>              <span class="hljs-number">322</span><br><span class="hljs-number">18</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">19</span>              <span class="hljs-number">323</span><br><span class="hljs-number">19</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">20</span>              <span class="hljs-number">324</span><br><span class="hljs-number">20</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">21</span>              <span class="hljs-number">325</span><br><span class="hljs-number">21</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">22</span>              <span class="hljs-number">326</span><br><span class="hljs-number">22</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">23</span>              <span class="hljs-number">327</span><br><span class="hljs-number">23</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">24</span>              <span class="hljs-number">328</span><br><span class="hljs-number">24</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">25</span>              <span class="hljs-number">329</span><br><span class="hljs-number">25</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">26</span>              <span class="hljs-number">330</span><br><span class="hljs-number">26</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">27</span>              <span class="hljs-number">331</span><br><span class="hljs-number">27</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">28</span>              <span class="hljs-number">332</span><br><span class="hljs-number">28</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">29</span>              <span class="hljs-number">333</span><br><span class="hljs-number">29</span> <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">30</span>              <span class="hljs-number">334</span><br><span class="hljs-number">30</span> <span class="hljs-number">2023</span>-<span class="hljs-number">12</span>-01              <span class="hljs-number">335</span><br><br><span class="hljs-comment"># 看下dayofyear属性里是啥：</span><br><br><span class="hljs-meta">&gt;&gt;&gt; </span>df[<span class="hljs-string">&#x27;day&#x27;</span>].dt.dayofyear<br><span class="hljs-number">0</span>     <span class="hljs-number">305</span><br><span class="hljs-number">1</span>     <span class="hljs-number">306</span><br><span class="hljs-number">2</span>     <span class="hljs-number">307</span><br><span class="hljs-number">3</span>     <span class="hljs-number">308</span><br><span class="hljs-number">4</span>     <span class="hljs-number">309</span><br><span class="hljs-number">5</span>     <span class="hljs-number">310</span><br><span class="hljs-number">6</span>     <span class="hljs-number">311</span><br><span class="hljs-number">7</span>     <span class="hljs-number">312</span><br><span class="hljs-number">8</span>     <span class="hljs-number">313</span><br><span class="hljs-number">9</span>     <span class="hljs-number">314</span><br><span class="hljs-number">10</span>    <span class="hljs-number">315</span><br><span class="hljs-number">11</span>    <span class="hljs-number">316</span><br><span class="hljs-number">12</span>    <span class="hljs-number">317</span><br><span class="hljs-number">13</span>    <span class="hljs-number">318</span><br><span class="hljs-number">14</span>    <span class="hljs-number">319</span><br><span class="hljs-number">15</span>    <span class="hljs-number">320</span><br><span class="hljs-number">16</span>    <span class="hljs-number">321</span><br><span class="hljs-number">17</span>    <span class="hljs-number">322</span><br><span class="hljs-number">18</span>    <span class="hljs-number">323</span><br><span class="hljs-number">19</span>    <span class="hljs-number">324</span><br><span class="hljs-number">20</span>    <span class="hljs-number">325</span><br><span class="hljs-number">21</span>    <span class="hljs-number">326</span><br><span class="hljs-number">22</span>    <span class="hljs-number">327</span><br><span class="hljs-number">23</span>    <span class="hljs-number">328</span><br><span class="hljs-number">24</span>    <span class="hljs-number">329</span><br><span class="hljs-number">25</span>    <span class="hljs-number">330</span><br><span class="hljs-number">26</span>    <span class="hljs-number">331</span><br><span class="hljs-number">27</span>    <span class="hljs-number">332</span><br><span class="hljs-number">28</span>    <span class="hljs-number">333</span><br><span class="hljs-number">29</span>    <span class="hljs-number">334</span><br><span class="hljs-number">30</span>    <span class="hljs-number">335</span><br>Name: day, dtype: int64<br></code></pre></td></tr></table></figure>
+
+<h2 id="P15-Generate-a-dataset-of-random-numbers-with-date-as-index"><a href="#P15-Generate-a-dataset-of-random-numbers-with-date-as-index" class="headerlink" title="P15 Generate a dataset of random numbers with date as index"></a>P15 Generate a dataset of random numbers with date as index</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>date_range = pd.date_range(start=<span class="hljs-string">&#x27;2023-11-7&#x27;</span>, periods=<span class="hljs-number">1000</span>)<br><br>data = &#123;<br>    <span class="hljs-string">&#x27;norm&#x27;</span>: np.random.normal(loc=<span class="hljs-number">0</span>, scale=<span class="hljs-number">1</span>, size=<span class="hljs-number">1000</span>),<br>    <span class="hljs-comment">#np.random.normal: 正态分布抽取，loc分布的均值，scale分布的宽度，size输出值的维度</span><br>    <span class="hljs-string">&#x27;uniform&#x27;</span>: np.random.uniform(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">1</span>, size=<span class="hljs-number">1000</span>),<br>    <span class="hljs-comment">#np.random.uniform: 均匀分布的样品里随机取样，low下界（闭），high上界（开）,size输出值维度</span><br>    <span class="hljs-string">&#x27;binomial&#x27;</span>: np.random.binomial(n=<span class="hljs-number">1</span>, p=<span class="hljs-number">0.2</span>, size=<span class="hljs-number">1000</span>)<br>    <span class="hljs-comment">#np.random.binomial: 二项式分布样品里随机抽样，n伯努利实验重复次数，p独立事件概率，size输出值的维度</span><br>&#125;<br><br>df = pd.DataFrame(data=data, index=date_range)<br><br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df)<br>                norm   uniform  binomial<br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-07 -<span class="hljs-number">0.673309</span>  <span class="hljs-number">0.534941</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-08 -<span class="hljs-number">0.641853</span>  <span class="hljs-number">0.586685</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-09  <span class="hljs-number">0.400873</span>  <span class="hljs-number">0.312451</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">10</span>  <span class="hljs-number">2.219158</span>  <span class="hljs-number">0.048007</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">11</span> -<span class="hljs-number">1.581015</span>  <span class="hljs-number">0.952856</span>         <span class="hljs-number">0</span><br><span class="hljs-meta">... </span>             ...       ...       ...<br><span class="hljs-number">2026</span>-07-<span class="hljs-number">29</span>  <span class="hljs-number">0.697699</span>  <span class="hljs-number">0.460210</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-07-<span class="hljs-number">30</span>  <span class="hljs-number">0.655960</span>  <span class="hljs-number">0.089912</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-07-<span class="hljs-number">31</span> -<span class="hljs-number">0.647422</span>  <span class="hljs-number">0.630736</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-08-01  <span class="hljs-number">0.925788</span>  <span class="hljs-number">0.921439</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-08-02  <span class="hljs-number">0.100924</span>  <span class="hljs-number">0.508387</span>         <span class="hljs-number">0</span><br><br>[<span class="hljs-number">1000</span> rows x <span class="hljs-number">3</span> columns]<br></code></pre></td></tr></table></figure>
+
+<h2 id="P16-输出Dataframe的前几行或后几行"><a href="#P16-输出Dataframe的前几行或后几行" class="headerlink" title="P16 输出Dataframe的前几行或后几行"></a>P16 输出Dataframe的前几行或后几行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># P15的结果</span><br>df = pd.DataFrame(data=data, index=date_range)<br><br><span class="hljs-comment"># 和shell类似的head和tail用来输出前几行和后几行</span><br><span class="hljs-built_in">print</span>(df.head(<span class="hljs-number">10</span>))<br><span class="hljs-built_in">print</span>(df.tail(<span class="hljs-number">5</span>))<br></code></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.head(<span class="hljs-number">10</span>))<br>                norm   uniform  binomial<br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-07  <span class="hljs-number">0.402368</span>  <span class="hljs-number">0.713925</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-08  <span class="hljs-number">1.109252</span>  <span class="hljs-number">0.370335</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-09 -<span class="hljs-number">0.741132</span>  <span class="hljs-number">0.492781</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">10</span>  <span class="hljs-number">1.299560</span>  <span class="hljs-number">0.303082</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">11</span> -<span class="hljs-number">0.738895</span>  <span class="hljs-number">0.628298</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">12</span> -<span class="hljs-number">0.758462</span>  <span class="hljs-number">0.563461</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">13</span>  <span class="hljs-number">1.487287</span>  <span class="hljs-number">0.279051</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">14</span> -<span class="hljs-number">0.948288</span>  <span class="hljs-number">0.198686</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">15</span> -<span class="hljs-number">0.487149</span>  <span class="hljs-number">0.299550</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-<span class="hljs-number">16</span>  <span class="hljs-number">1.048030</span>  <span class="hljs-number">0.937323</span>         <span class="hljs-number">0</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.tail(<span class="hljs-number">5</span>))<br>                norm   uniform  binomial<br><span class="hljs-number">2026</span>-07-<span class="hljs-number">29</span> -<span class="hljs-number">1.410419</span>  <span class="hljs-number">0.094071</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-07-<span class="hljs-number">30</span>  <span class="hljs-number">1.301222</span>  <span class="hljs-number">0.752692</span>         <span class="hljs-number">1</span><br><span class="hljs-number">2026</span>-07-<span class="hljs-number">31</span>  <span class="hljs-number">0.344197</span>  <span class="hljs-number">0.177724</span>         <span class="hljs-number">0</span><br><span class="hljs-number">2026</span>-08-01 -<span class="hljs-number">1.138749</span>  <span class="hljs-number">0.094369</span>         <span class="hljs-number">1</span><br><span class="hljs-number">2026</span>-08-02 -<span class="hljs-number">0.098699</span>  <span class="hljs-number">0.030986</span>         <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P17-输出Dataframe的基本信息和数据统计结果"><a href="#P17-输出Dataframe的基本信息和数据统计结果" class="headerlink" title="P17 输出Dataframe的基本信息和数据统计结果"></a>P17 输出Dataframe的基本信息和数据统计结果</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># P15的结果</span><br>df = pd.DataFrame(data=data, index=date_range)<br><br><span class="hljs-comment"># 查看一下</span><br><span class="hljs-built_in">print</span>(df.info())<br><span class="hljs-built_in">print</span>(df.describe())<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># df.info() 查看基本信息，显示了索引的信息，每一列的信息，非空列数和数据类型，还显示了内存占用</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.info())<br>&lt;<span class="hljs-keyword">class</span> <span class="hljs-string">&#x27;pandas.core.frame.DataFrame&#x27;</span>&gt;<br>DatetimeIndex: <span class="hljs-number">1000</span> entries, <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-07 to <span class="hljs-number">2026</span>-08-02<br>Freq: D<br>Data columns (total <span class="hljs-number">3</span> columns):<br> <span class="hljs-comment">#   Column    Non-Null Count  Dtype  </span><br>---  ------    --------------  -----  <br> <span class="hljs-number">0</span>   norm      <span class="hljs-number">1000</span> non-null   float64<br> <span class="hljs-number">1</span>   uniform   <span class="hljs-number">1000</span> non-null   float64<br> <span class="hljs-number">2</span>   binomial  <span class="hljs-number">1000</span> non-null   int64  <br>dtypes: float64(<span class="hljs-number">2</span>), int64(<span class="hljs-number">1</span>)<br>memory usage: <span class="hljs-number">31.2</span> KB<br><span class="hljs-literal">None</span><br><span class="hljs-comment"># df.describe() 查看了每一列的列数、平均数、标准差、最小值、四分位数和最大值</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.describe())<br>              norm      uniform     binomial<br>count  <span class="hljs-number">1000.000000</span>  <span class="hljs-number">1000.000000</span>  <span class="hljs-number">1000.000000</span><br>mean      <span class="hljs-number">0.042103</span>     <span class="hljs-number">0.490103</span>     <span class="hljs-number">0.209000</span><br>std       <span class="hljs-number">0.973974</span>     <span class="hljs-number">0.293130</span>     <span class="hljs-number">0.406798</span><br><span class="hljs-built_in">min</span>      -<span class="hljs-number">3.315361</span>     <span class="hljs-number">0.000975</span>     <span class="hljs-number">0.000000</span><br><span class="hljs-number">25</span>%      -<span class="hljs-number">0.641808</span>     <span class="hljs-number">0.235426</span>     <span class="hljs-number">0.000000</span><br><span class="hljs-number">50</span>%       <span class="hljs-number">0.019109</span>     <span class="hljs-number">0.477758</span>     <span class="hljs-number">0.000000</span><br><span class="hljs-number">75</span>%       <span class="hljs-number">0.775706</span>     <span class="hljs-number">0.741953</span>     <span class="hljs-number">0.000000</span><br><span class="hljs-built_in">max</span>       <span class="hljs-number">3.097657</span>     <span class="hljs-number">0.999351</span>     <span class="hljs-number">1.000000</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="P18-查看某一列的某个值出现了多少次"><a href="#P18-查看某一列的某个值出现了多少次" class="headerlink" title="P18 查看某一列的某个值出现了多少次"></a>P18 查看某一列的某个值出现了多少次</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># P15的结果</span><br>df = pd.DataFrame(data=data, index=date_range)<br><br><span class="hljs-comment"># 查看binomial列的0的频数和1的频数</span><br><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;binomial&quot;</span>].value_counts())<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df[<span class="hljs-string">&quot;binomial&quot;</span>].value_counts())<br><span class="hljs-number">0</span>    <span class="hljs-number">791</span><br><span class="hljs-number">1</span>    <span class="hljs-number">209</span><br>Name: binomial, dtype: int64<br></code></pre></td></tr></table></figure>
+
+<h2 id="P19-Dataframe存为csv文件"><a href="#P19-Dataframe存为csv文件" class="headerlink" title="P19 Dataframe存为csv文件"></a>P19 Dataframe存为csv文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># P15的结果</span><br>df = pd.DataFrame(data=data, index=date_range)<br><br><span class="hljs-comment"># 取前100列输出</span><br>df.head(<span class="hljs-number">100</span>).to_csv(<span class="hljs-string">&quot;/Users/emmett/Desktop/P19_output.csv&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">(base) emmett@EmmettdeMacBook-Air ~ % head ~/Desktop/P19_output.csv         <br>,norm,uniform,binomial<br>2023-11-07,0.4023684187649195,0.7139247843762494,0<br>2023-11-08,1.1092517540800102,0.37033490685548265,0<br>2023-11-09,-0.7411318489406269,0.4927811317047385,0<br>2023-11-10,1.2995596866176715,0.30308160140089524,0<br>2023-11-11,-0.7388953663805584,0.6282983721098137,0<br>2023-11-12,-0.7584618817922961,0.5634610419207209,0<br>2023-11-13,1.487286995350167,0.2790511370963281,0<br>2023-11-14,-0.9482877456716767,0.1986855859133323,0<br>2023-11-15,-0.48714905003231695,0.2995498262349372,0<br></code></pre></td></tr></table></figure>
+
+<h2 id="P20-Dataframe读取csv文件"><a href="#P20-Dataframe读取csv文件" class="headerlink" title="P20 Dataframe读取csv文件"></a>P20 Dataframe读取csv文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>df = pd.read_csv(<span class="hljs-string">&quot;/Users/emmett/Desktop/P19_output.csv&quot;</span>, index_col=<span class="hljs-number">0</span>)<br><br><span class="hljs-built_in">print</span>(df.info())<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(df.info())<br>&lt;<span class="hljs-keyword">class</span> <span class="hljs-string">&#x27;pandas.core.frame.DataFrame&#x27;</span>&gt;<br>Index: <span class="hljs-number">100</span> entries, <span class="hljs-number">2023</span>-<span class="hljs-number">11</span>-07 to <span class="hljs-number">2024</span>-02-<span class="hljs-number">14</span><br>Data columns (total <span class="hljs-number">3</span> columns):<br> <span class="hljs-comment">#   Column    Non-Null Count  Dtype  </span><br>---  ------    --------------  -----  <br> <span class="hljs-number">0</span>   norm      <span class="hljs-number">100</span> non-null    float64<br> <span class="hljs-number">1</span>   uniform   <span class="hljs-number">100</span> non-null    float64<br> <span class="hljs-number">2</span>   binomial  <span class="hljs-number">100</span> non-null    int64  <br>dtypes: float64(<span class="hljs-number">2</span>), int64(<span class="hljs-number">1</span>)<br>memory usage: <span class="hljs-number">3.1</span>+ KB<br><span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Pandas/" class="category-chain-item">Pandas</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Pandas: Pandas入门笔记(1)————Pandas的数据格式和基本操作</div>
+      <div>https://emmettpeng.github.io/2023/11/01/pandas-base/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Emmett Peng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 1, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/15/pandas-base-2/" title="Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandas: Pandas入门笔记(2)————通过股票数据实践查看、筛选、设置索引、删除列、重命名等操作</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/26/%E7%BB%99Galaxy%E6%B3%A8%E5%86%8C%E5%A2%9E%E5%8A%A0%E5%BC%BA%E5%AF%86%E7%A0%81%E8%AE%BE%E7%BD%AE/" title="给Galaxy注册增加强密码设置">
+                        <span class="hidden-mobile">给Galaxy注册增加强密码设置</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"YeHkpbZBcgEvVDUhALlkAvpl-MdYXbMMI","appKey":"jtxg2UEr7vvpFAljpNrl6Y1V","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://yehkpbzb.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
