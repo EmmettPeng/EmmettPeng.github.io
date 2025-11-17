@@ -24,7 +24,7 @@
 <meta property="og:description" content="微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-20T02:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-17T13:12:47.087Z">
+<meta property="article:modified_time" content="2025-11-17T14:43:16.070Z">
 <meta property="article:author" content="Emmett Peng">
 <meta property="article:tag" content="Publications">
 <meta name="twitter:card" content="summary_large_image">
@@ -137,33 +137,33 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Categories</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Tags</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/publications/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>publications</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
               </a>
             </li>
           
@@ -276,11 +276,11 @@
                 <p>微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。</p>
 <span id="more"></span>
 
-<h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><p>英文标题：Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks<br>中文标题：利用共现与代谢互补网络揭示嗜热菌群的代谢依赖期刊：Nature Communications<br>发表时间：2024年9月<br>第一作者：彭玺<br>通讯作者：邓晔<br>作者单位：中国科学院生态环境研究中心、中国科学院大学<br>合作单位：苏黎世联邦理工学院、中国地质大学（北京）、浙江大学、贵州大学</p>
+<h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><p>英文标题：Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks<br>中文标题：利用共现与代谢互补网络揭示嗜热菌群的代谢依赖<br>期刊：Nature Communications<br>发表时间：2024年9月<br>第一作者：彭玺<br>通讯作者：邓晔<br>作者单位：中国科学院生态环境研究中心、中国科学院大学<br>合作单位：苏黎世联邦理工学院、中国地质大学（北京）、浙江大学、贵州大学</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。我们将这种方法应用于温度梯度的热泉中，揭示了高温胁迫与代谢互补之间的相互作用。我们的分析揭示了随着温度升高，代谢相互作用的频率增加。氨基酸、辅酶A衍生物和糖类作为关键的潜在可交换代谢物为微生物的协同作用奠定了物质基础。在这些协同作用中，偏利（commensalistic）相互作用占比远大于互利（mutualistic）。代谢交换在系统发育距离较远的物种之间最为普遍，尤其是古菌-细菌合作，作为对恶劣环境的关键适应。此外，我们发现基础代谢物交换与基因组大小差异之间存在显著的正相关性，这可能代表着精简基因组与代谢更丰富的伙伴合作的一种典型方式。这一现象也在另一个具有温度梯度样品的堆肥实验结果中得到证实。我们的方法为解读微生物相互作用背后的代谢互补机制提供了一种可行的方式，我们的发现表明高温胁迫影响了嗜热菌的合作策略，使得它们从基因组层面上改变了各自的功能潜力。</p>
 <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>微生物生态系统在复杂的相互作用网络中繁衍生息，这些网络通常因其巨大的多样性与传统培养方法的局限性而难以捉摸。随着测序技术和计算建模的进步，基于环境样本中物种共现模式构建的微生物网络，已成为推断物种间联系的强大工具。然而，仅凭基于相关性的共现性并不能提供相互作用的确凿证据。为此，我们结合了共现网络分析与代谢互补证据，以推断更稳健的互作关系及其深层机制。我们采用基于RMT的方法来判别共现与代谢互补网络的阈值。研究结果显示，随着温度的升高，代谢互补潜力增强，嗜热菌越来越依赖于物种间的物质交换来维持生存。此外，我们发现系统发育距离决定了合作策略，密切相关的嗜热菌会为相似资源而竞争，而远缘物种则进行协同（包括互利与偏利）的代谢交换。我们的研究为理解微生物在极端环境中的协同作用提供了新的见解，并为环境压力、代谢依赖和微生物群落中合作策略的演化这几方面间的繁杂关系提供了新的视角。</p>
 <h2 id="材料与方法"><a href="#材料与方法" class="headerlink" title="材料与方法"></a>材料与方法</h2><p>我们选择了来自我国云南省腾冲市的一处温度梯度（63.5℃~85.8℃）热泉沉积物样品作为研究对象。我们选取8个温度点作为代表并以它们的大致温度进行命名（T85, T78, T73, T70, T67, T65, T64, T63），每个温度点采集5个平行样品，共40个样品。对于每个样品，进行了二代Illumina鸟枪宏基因组测序，每个温度点的5个平行样品DNA混合后另外进行了Nanopore纳米孔测序。经过组装与分箱后，获得401个非冗余的MAGs。根据丰度信息，计算MAG在样本间丰度的Spearman相关性并使用RMT方法筛选网络阈值构建MAG共现网络。另外，使用CarveMe对每个MAG构建了基因组规模代谢模型（Genome-scale metabolic models, GSMMs）并使用PhyloMint计算了模型间两两的互补系数，类似地使用RMT方法筛选网络阈值构建了MAG代谢互补网络。我们根据PhyloMint的计算原理，推断了被计算为具有代谢互补特性的物种间潜在的可交换代谢物（Potentially transferable metabolites, PTMs）。</p>
-<h2 id="主要结果"><a href="#主要结果" class="headerlink" title="主要结果"></a>主要结果</h2><h3 id="网络构建与热泉嗜热菌在热胁迫下的偏好"><a href="#网络构建与热泉嗜热菌在热胁迫下的偏好" class="headerlink" title="网络构建与热泉嗜热菌在热胁迫下的偏好"></a>网络构建与热泉嗜热菌在热胁迫下的偏好</h3><p>网络构建与热泉嗜热菌在热胁迫下的偏好网络构建方法已整合到iNAP平台，详尽的分析和使用流程将于近期发布，敬请期待。这里我们对约223Gb二代Illumina短读序列与约52Gb三代Nanopore长读序列进行了分析，使用Nonpareil方法分别计算了8个样本的序列多样性（<em>N<sub>d</sub><em>）。我们发现，随着温度从极端高温下降，N<sub>d</sub>呈上升趋势（图1a），表明极端高温降低了微生物群落的序列多样性，其中的物种多样性可能更加特化。经过组装、分箱与质控后，保留了401个中高质量（完整度≥50%，污染度≤10%）的MAG用作后续分析。MAG的物种分类结果表明，这些MAG来自38个细菌门与7个古菌门（图1b）。不同温度范围的MAG丰度差异显著（PERMANOVA，</em>p</em>&lt;0.001，图1c），据此，8个采样温度点被分为三组：ET(extremely thermal)、HT(highly thermal)与MT(moderately thermal)。大多数MAGs都展现出明显的温度偏好，能够存活在各个梯度中的物种相对稀少。尽管古菌在所有样本中只占相对丰度的7.31%，但它们也表现出了明显的温度偏好，如古菌门中丰度最高的Thermoproteota门对ET组有很强的偏好，而次之的Micrarchaeota几乎仅在HT与MT中存在。这些发现强调了嗜热菌在热泉生态系统中的热适应性与偏好性。</p>
+<h2 id="主要结果"><a href="#主要结果" class="headerlink" title="主要结果"></a>主要结果</h2><h3 id="网络构建与热泉嗜热菌在热胁迫下的偏好"><a href="#网络构建与热泉嗜热菌在热胁迫下的偏好" class="headerlink" title="网络构建与热泉嗜热菌在热胁迫下的偏好"></a>网络构建与热泉嗜热菌在热胁迫下的偏好</h3><p>网络构建与热泉嗜热菌在热胁迫下的偏好网络构建方法已整合到iNAP平台，详尽的分析和使用流程将于近期发布，敬请期待。这里我们对约223Gb二代Illumina短读序列与约52Gb三代Nanopore长读序列进行了分析，使用Nonpareil方法分别计算了8个样本的序列多样性（ <em>N<sub>d</sub></em> ）。我们发现，随着温度从极端高温下降， <em>N<sub>d</sub></em> 呈上升趋势（图1a），表明极端高温降低了微生物群落的序列多样性，其中的物种多样性可能更加特化。经过组装、分箱与质控后，保留了401个中高质量（完整度≥50%，污染度≤10%）的MAG用作后续分析。MAG的物种分类结果表明，这些MAG来自38个细菌门与7个古菌门（图1b）。不同温度范围的MAG丰度差异显著（PERMANOVA，<em>p</em>&lt;0.001，图1c），据此，8个采样温度点被分为三组：ET(extremely thermal)、HT(highly thermal)与MT(moderately thermal)。大多数MAGs都展现出明显的温度偏好，能够存活在各个梯度中的物种相对稀少。尽管古菌在所有样本中只占相对丰度的7.31%，但它们也表现出了明显的温度偏好，如古菌门中丰度最高的Thermoproteota门对ET组有很强的偏好，而次之的Micrarchaeota几乎仅在HT与MT中存在。这些发现强调了嗜热菌在热泉生态系统中的热适应性与偏好性。</p>
 <div>
     <p>图1 不同采样温度点的序列多样性与MAG物种分布</p>
     <embed src="/img/2024NC_figs/Figure_2.pdf" type="application/pdf" width="100%" height="600px">
@@ -295,13 +295,13 @@
 </div>
 
 
-<h3 id="三个温度组别下嗜热菌的成对代谢互补"><a href="#三个温度组别下嗜热菌的成对代谢互补" class="headerlink" title="三个温度组别下嗜热菌的成对代谢互补"></a>三个温度组别下嗜热菌的成对代谢互补</h3><p>为了计算代谢互补，我们为每个MAG重建了GSMM。我们定义PhyloMint代谢互补指数（*MI<sub>complementarity</sub><em>）以定量评估三个温度组别中每对MAG之间的代谢互作程度。计算</em>MI<sub>complementarity</sub><em>时，该指数是不对称的（即</em>MI(A,B)<em>与</em>MI(B,A)*不同，它们分别表示B对A和A对B的代谢物供给潜力），对于每对MAG，我们取较大值作为代表并使用RMT方法进行筛选（图3），筛选得到的协同关系（synergy）非常稀有，而其中，协同作用中的互利关系（mutualism）是少中又少，更多的是偏利关系（commensalism）。这表明，热泉群落中基于代谢的协同作用主要是单向偏利驱动的。对这些协同关系进一步分析发现，互利关系的MAG平均基因组大小差异均接近于0，而偏利关系的MAG平均基因组大小差异在三个温度组别下分别为ET：716Kbp；HT：1204Kbp；MT：879Kbp。该结果表明，在偏利关系中，一个精简基因组和另一个更全面基因组之间的大量代谢依赖是一种更普遍的模式。利用RMT筛选协同作用后的代谢互补网络结果表明（图3），ET组的代谢互作网络比它的共现网络具有更稳健的无标度性。最热的ET组尽管网络规模较小，但表现出更高的平均聚类系数和最大的密度等特征，表明在该极端环境中仍存在高度代谢依赖的群落；然而，一些参数与共现网络模式相反，这些发现表明，两种网络在评估微生物互作关系上并不一致。</p>
+<h3 id="三个温度组别下嗜热菌的成对代谢互补"><a href="#三个温度组别下嗜热菌的成对代谢互补" class="headerlink" title="三个温度组别下嗜热菌的成对代谢互补"></a>三个温度组别下嗜热菌的成对代谢互补</h3><p>为了计算代谢互补，我们为每个MAG重建了GSMM。我们定义PhyloMint代谢互补指数（<i>MI<sub>complementarity</sub></i>）以定量评估三个温度组别中每对MAG之间的代谢互作程度。计算 <i>MI<sub>complementarity</sub></i>时，该指数是不对称的（即<br><i>MI(A,B)</i>与<i>MI(B,A)</i>不同，它们分别表示B对A和A对B的代谢物供给潜力），对于每对MAG，我们取较大值作为代表并使用RMT方法进行筛选（图3），筛选得到的协同关系（synergy）非常稀有，而其中，协同作用中的互利关系（mutualism）是少中又少，更多的是偏利关系（commensalism）。这表明，热泉群落中基于代谢的协同作用主要是单向偏利驱动的。对这些协同关系进一步分析发现，互利关系的MAG平均基因组大小差异均接近于0，而偏利关系的MAG平均基因组大小差异在三个温度组别下分别为ET：716Kbp；HT：1204Kbp；MT：879Kbp。该结果表明，在偏利关系中，一个精简基因组和另一个更全面基因组之间的大量代谢依赖是一种更普遍的模式。利用RMT筛选协同作用后的代谢互补网络结果表明（图3），ET组的代谢互作网络比它的共现网络具有更稳健的无标度性。最热的ET组尽管网络规模较小，但表现出更高的平均聚类系数和最大的密度等特征，表明在该极端环境中仍存在高度代谢依赖的群落；然而，一些参数与共现网络模式相反，这些发现表明，两种网络在评估微生物互作关系上并不一致。</p>
 <div>
     <p>图3 三类（非协同、互利协同与偏利协同）关系的分布与基于协同关系的代谢互补网络</p>
     <embed src="/img/2024NC_figs/Figure_4.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
-<p>为了解微生物的相互作用是如何产生的，我们计算了系统发育距离（Faith’s PD）与共现模式和代谢互补之间的关系。共现强度（由Spearman相关性度量）在所有温度组中与PD呈负相关（图4a-c）。然而，在经RMT阈值过滤后，PD的密度分布呈现两个峰，一个接近2（远缘物种共现），另一个接近0（近缘物种共现）。另一方面，代谢互补强度（由*MI<sub>complementarity</sub>*度量）在所有温度组中与PD呈正相关（图4d-f），表明远缘MAG更有可能通过代谢互补表现出协同。经过RMT过滤后，PD低于1的MAG对变得越来越少，大多数值仅聚集于2左右。这表明代谢互补分析忽略了基于由系统发育接近而造成的共现，而强调了远缘物种之间代谢互补的重要性。</p>
+<p>为了解微生物的相互作用是如何产生的，我们计算了系统发育距离（Faith’s PD）与共现模式和代谢互补之间的关系。共现强度（由Spearman相关性度量）在所有温度组中与PD呈负相关（图4a-c）。然而，在经RMT阈值过滤后，PD的密度分布呈现两个峰，一个接近2（远缘物种共现），另一个接近0（近缘物种共现）。另一方面，代谢互补强度（由 <i>MI<sub>complementarity</sub></i>度量）在所有温度组中与PD呈正相关（图4d-f），表明远缘MAG更有可能通过代谢互补表现出协同。经过RMT过滤后，PD低于1的MAG对变得越来越少，大多数值仅聚集于2左右。这表明代谢互补分析忽略了基于由系统发育接近而造成的共现，而强调了远缘物种之间代谢互补的重要性。</p>
 <div>
     <p>图4 系统发育距离-Spearman相关性与系统发育距离-PhyloMint代谢互补系数的散点图及相关性</p>
     <embed src="/img/2024NC_figs/Figure_5.pdf" type="application/pdf" width="100%" height="600px">
@@ -309,7 +309,7 @@
 
 <h3 id="代谢协同的基因组层面中的证据"><a href="#代谢协同的基因组层面中的证据" class="headerlink" title="代谢协同的基因组层面中的证据"></a>代谢协同的基因组层面中的证据</h3><p>基因组大小和其中内容被证明是热泉群落中代谢互作的关键因素之一。从ET组到较低温度，分布在不同温度下的MAGs的基因组大小与温度之间的相关性由负转正（图5a），即极高温度中小基因组物种往往占据更高的丰度，而当温度下降到大部分物种可以适应的范围时，小基因组物种的丰度优势随之消失。基因组大小也被证实与基因组中执行不同功能的基因比例相关（图5b）。具体来说，基因组大小与糖类代谢、脂质运输与代谢等功能基因比例呈显著正相关，而与遗传信息复制与处理等管家功能呈显著负相关。此外，构建了线性混合效应模型，表明当基因组大小被设置为随机效应时，主管代谢功能的基因差异与代谢互补有强烈的正向影响（图5c）。成对MAG的代谢互补强度随基因组大小的差异增大而显著增加，且在ET组中最为明显（图5d-f）。以上结果表明，基因组大小在极端环境中代谢互补的形成起到关键作用，其中与遗传信息存储与处理相关的基因尽可能被保留下来，而与各种代谢相关的基因则丢失，依靠协同作用来弥补其有限的代谢能力。</p>
 <div>
-    <p>图5 MIcomplementarity与基因组大小和生物功能比例的关系</p>
+    <p>图5 <i>MI<sub>complementarity</sub></i>与基因组大小和生物功能比例的关系</p>
     <embed src="/img/2024NC_figs/Figure_6.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
@@ -525,7 +525,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <p>&copy; Copyright 2025 Xi Emmett Peng, All rights reserved.</p> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   
