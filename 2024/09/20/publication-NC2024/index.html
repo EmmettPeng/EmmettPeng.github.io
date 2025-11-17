@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page_avatar.png">
+  <link rel="icon" href="/img/page_avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Emmett Peng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks">
+<meta property="og:url" content="https://emmettpeng.github.io/2024/09/20/publication-NC2024/index.html">
+<meta property="og:site_name" content="Emmett&#39;s Note">
+<meta property="og:description" content="微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-20T02:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-17T13:12:47.087Z">
+<meta property="article:author" content="Emmett Peng">
+<meta property="article:tag" content="Publications">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks - Emmett&#39;s Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"emmettpeng.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>emmett&#39;s notebook</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-20 10:00" pubdate>
+          September 20, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。</p>
+<span id="more"></span>
+
+<h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><p>英文标题：Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks<br>中文标题：利用共现与代谢互补网络揭示嗜热菌群的代谢依赖期刊：Nature Communications<br>发表时间：2024年9月<br>第一作者：彭玺<br>通讯作者：邓晔<br>作者单位：中国科学院生态环境研究中心、中国科学院大学<br>合作单位：苏黎世联邦理工学院、中国地质大学（北京）、浙江大学、贵州大学</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>微生物群落展现出基于代谢依赖性的复杂相互作用。为了阐明这些依赖性，我们提出了一种利用随机矩阵理论模型（RMT）对宏基因组组装基因组（MAGs）构建共生和代谢互补网络的工作流程。我们将这种方法应用于温度梯度的热泉中，揭示了高温胁迫与代谢互补之间的相互作用。我们的分析揭示了随着温度升高，代谢相互作用的频率增加。氨基酸、辅酶A衍生物和糖类作为关键的潜在可交换代谢物为微生物的协同作用奠定了物质基础。在这些协同作用中，偏利（commensalistic）相互作用占比远大于互利（mutualistic）。代谢交换在系统发育距离较远的物种之间最为普遍，尤其是古菌-细菌合作，作为对恶劣环境的关键适应。此外，我们发现基础代谢物交换与基因组大小差异之间存在显著的正相关性，这可能代表着精简基因组与代谢更丰富的伙伴合作的一种典型方式。这一现象也在另一个具有温度梯度样品的堆肥实验结果中得到证实。我们的方法为解读微生物相互作用背后的代谢互补机制提供了一种可行的方式，我们的发现表明高温胁迫影响了嗜热菌的合作策略，使得它们从基因组层面上改变了各自的功能潜力。</p>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>微生物生态系统在复杂的相互作用网络中繁衍生息，这些网络通常因其巨大的多样性与传统培养方法的局限性而难以捉摸。随着测序技术和计算建模的进步，基于环境样本中物种共现模式构建的微生物网络，已成为推断物种间联系的强大工具。然而，仅凭基于相关性的共现性并不能提供相互作用的确凿证据。为此，我们结合了共现网络分析与代谢互补证据，以推断更稳健的互作关系及其深层机制。我们采用基于RMT的方法来判别共现与代谢互补网络的阈值。研究结果显示，随着温度的升高，代谢互补潜力增强，嗜热菌越来越依赖于物种间的物质交换来维持生存。此外，我们发现系统发育距离决定了合作策略，密切相关的嗜热菌会为相似资源而竞争，而远缘物种则进行协同（包括互利与偏利）的代谢交换。我们的研究为理解微生物在极端环境中的协同作用提供了新的见解，并为环境压力、代谢依赖和微生物群落中合作策略的演化这几方面间的繁杂关系提供了新的视角。</p>
+<h2 id="材料与方法"><a href="#材料与方法" class="headerlink" title="材料与方法"></a>材料与方法</h2><p>我们选择了来自我国云南省腾冲市的一处温度梯度（63.5℃~85.8℃）热泉沉积物样品作为研究对象。我们选取8个温度点作为代表并以它们的大致温度进行命名（T85, T78, T73, T70, T67, T65, T64, T63），每个温度点采集5个平行样品，共40个样品。对于每个样品，进行了二代Illumina鸟枪宏基因组测序，每个温度点的5个平行样品DNA混合后另外进行了Nanopore纳米孔测序。经过组装与分箱后，获得401个非冗余的MAGs。根据丰度信息，计算MAG在样本间丰度的Spearman相关性并使用RMT方法筛选网络阈值构建MAG共现网络。另外，使用CarveMe对每个MAG构建了基因组规模代谢模型（Genome-scale metabolic models, GSMMs）并使用PhyloMint计算了模型间两两的互补系数，类似地使用RMT方法筛选网络阈值构建了MAG代谢互补网络。我们根据PhyloMint的计算原理，推断了被计算为具有代谢互补特性的物种间潜在的可交换代谢物（Potentially transferable metabolites, PTMs）。</p>
+<h2 id="主要结果"><a href="#主要结果" class="headerlink" title="主要结果"></a>主要结果</h2><h3 id="网络构建与热泉嗜热菌在热胁迫下的偏好"><a href="#网络构建与热泉嗜热菌在热胁迫下的偏好" class="headerlink" title="网络构建与热泉嗜热菌在热胁迫下的偏好"></a>网络构建与热泉嗜热菌在热胁迫下的偏好</h3><p>网络构建与热泉嗜热菌在热胁迫下的偏好网络构建方法已整合到iNAP平台，详尽的分析和使用流程将于近期发布，敬请期待。这里我们对约223Gb二代Illumina短读序列与约52Gb三代Nanopore长读序列进行了分析，使用Nonpareil方法分别计算了8个样本的序列多样性（<em>N<sub>d</sub><em>）。我们发现，随着温度从极端高温下降，N<sub>d</sub>呈上升趋势（图1a），表明极端高温降低了微生物群落的序列多样性，其中的物种多样性可能更加特化。经过组装、分箱与质控后，保留了401个中高质量（完整度≥50%，污染度≤10%）的MAG用作后续分析。MAG的物种分类结果表明，这些MAG来自38个细菌门与7个古菌门（图1b）。不同温度范围的MAG丰度差异显著（PERMANOVA，</em>p</em>&lt;0.001，图1c），据此，8个采样温度点被分为三组：ET(extremely thermal)、HT(highly thermal)与MT(moderately thermal)。大多数MAGs都展现出明显的温度偏好，能够存活在各个梯度中的物种相对稀少。尽管古菌在所有样本中只占相对丰度的7.31%，但它们也表现出了明显的温度偏好，如古菌门中丰度最高的Thermoproteota门对ET组有很强的偏好，而次之的Micrarchaeota几乎仅在HT与MT中存在。这些发现强调了嗜热菌在热泉生态系统中的热适应性与偏好性。</p>
+<div>
+    <p>图1 不同采样温度点的序列多样性与MAG物种分布</p>
+    <embed src="/img/2024NC_figs/Figure_2.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+
+<h3 id="三个温度组别下嗜热菌的共现网络分析"><a href="#三个温度组别下嗜热菌的共现网络分析" class="headerlink" title="三个温度组别下嗜热菌的共现网络分析"></a>三个温度组别下嗜热菌的共现网络分析</h3><p>采用RMT方法，首先利用相对丰度信息构建了代表三个温度组别的共现网络（图2）。正相关在三个网络中都占大多数（ET：99.82%；HT：75.54%；MT：77.99%）。提取所有正相关的边作为子网络后，ET组与其他两组子网络相比，展现出更高的网络密度、更短的平均路径距离（GD）和更高的调和测地距离（HD）、更高的平均聚类系数以及更低的模块化程度。这些特征表明，ET子网络中的相互作用结构更紧密。</p>
+<div>
+    <p>图2 三组温度组别的共现网络及它们的正相关子网络</p>
+    <embed src="/img/2024NC_figs/Figure_3.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+<h3 id="三个温度组别下嗜热菌的成对代谢互补"><a href="#三个温度组别下嗜热菌的成对代谢互补" class="headerlink" title="三个温度组别下嗜热菌的成对代谢互补"></a>三个温度组别下嗜热菌的成对代谢互补</h3><p>为了计算代谢互补，我们为每个MAG重建了GSMM。我们定义PhyloMint代谢互补指数（*MI<sub>complementarity</sub><em>）以定量评估三个温度组别中每对MAG之间的代谢互作程度。计算</em>MI<sub>complementarity</sub><em>时，该指数是不对称的（即</em>MI(A,B)<em>与</em>MI(B,A)*不同，它们分别表示B对A和A对B的代谢物供给潜力），对于每对MAG，我们取较大值作为代表并使用RMT方法进行筛选（图3），筛选得到的协同关系（synergy）非常稀有，而其中，协同作用中的互利关系（mutualism）是少中又少，更多的是偏利关系（commensalism）。这表明，热泉群落中基于代谢的协同作用主要是单向偏利驱动的。对这些协同关系进一步分析发现，互利关系的MAG平均基因组大小差异均接近于0，而偏利关系的MAG平均基因组大小差异在三个温度组别下分别为ET：716Kbp；HT：1204Kbp；MT：879Kbp。该结果表明，在偏利关系中，一个精简基因组和另一个更全面基因组之间的大量代谢依赖是一种更普遍的模式。利用RMT筛选协同作用后的代谢互补网络结果表明（图3），ET组的代谢互作网络比它的共现网络具有更稳健的无标度性。最热的ET组尽管网络规模较小，但表现出更高的平均聚类系数和最大的密度等特征，表明在该极端环境中仍存在高度代谢依赖的群落；然而，一些参数与共现网络模式相反，这些发现表明，两种网络在评估微生物互作关系上并不一致。</p>
+<div>
+    <p>图3 三类（非协同、互利协同与偏利协同）关系的分布与基于协同关系的代谢互补网络</p>
+    <embed src="/img/2024NC_figs/Figure_4.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+<p>为了解微生物的相互作用是如何产生的，我们计算了系统发育距离（Faith’s PD）与共现模式和代谢互补之间的关系。共现强度（由Spearman相关性度量）在所有温度组中与PD呈负相关（图4a-c）。然而，在经RMT阈值过滤后，PD的密度分布呈现两个峰，一个接近2（远缘物种共现），另一个接近0（近缘物种共现）。另一方面，代谢互补强度（由*MI<sub>complementarity</sub>*度量）在所有温度组中与PD呈正相关（图4d-f），表明远缘MAG更有可能通过代谢互补表现出协同。经过RMT过滤后，PD低于1的MAG对变得越来越少，大多数值仅聚集于2左右。这表明代谢互补分析忽略了基于由系统发育接近而造成的共现，而强调了远缘物种之间代谢互补的重要性。</p>
+<div>
+    <p>图4 系统发育距离-Spearman相关性与系统发育距离-PhyloMint代谢互补系数的散点图及相关性</p>
+    <embed src="/img/2024NC_figs/Figure_5.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+<h3 id="代谢协同的基因组层面中的证据"><a href="#代谢协同的基因组层面中的证据" class="headerlink" title="代谢协同的基因组层面中的证据"></a>代谢协同的基因组层面中的证据</h3><p>基因组大小和其中内容被证明是热泉群落中代谢互作的关键因素之一。从ET组到较低温度，分布在不同温度下的MAGs的基因组大小与温度之间的相关性由负转正（图5a），即极高温度中小基因组物种往往占据更高的丰度，而当温度下降到大部分物种可以适应的范围时，小基因组物种的丰度优势随之消失。基因组大小也被证实与基因组中执行不同功能的基因比例相关（图5b）。具体来说，基因组大小与糖类代谢、脂质运输与代谢等功能基因比例呈显著正相关，而与遗传信息复制与处理等管家功能呈显著负相关。此外，构建了线性混合效应模型，表明当基因组大小被设置为随机效应时，主管代谢功能的基因差异与代谢互补有强烈的正向影响（图5c）。成对MAG的代谢互补强度随基因组大小的差异增大而显著增加，且在ET组中最为明显（图5d-f）。以上结果表明，基因组大小在极端环境中代谢互补的形成起到关键作用，其中与遗传信息存储与处理相关的基因尽可能被保留下来，而与各种代谢相关的基因则丢失，依靠协同作用来弥补其有限的代谢能力。</p>
+<div>
+    <p>图5 MIcomplementarity与基因组大小和生物功能比例的关系</p>
+    <embed src="/img/2024NC_figs/Figure_6.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+<p>物种协同作用的更多基因组层面线索存在于那些同时被共现网络和代谢互补网络筛选出的重叠关系中。这些重叠关系非常少，在这些关系中，274种PTMs被识别，其中58种是辅酶A衍生物，其次是氨基酸（包括肽和类似物，43种）和糖类（与其共轭化合物，30种）。此外还有30个分子被归类为核苷（包括核苷酸与类似物）。在探索代谢协同作用的复杂性时，我们关注到17个古菌-细菌重叠作用。其中，一些MAG表现出与多个其他物种同时共现且代谢互补，例如一个古菌（T64.bin.92）与它的7个细菌伙伴（图6）。这个中心MAG基因组很小，仅为0.857Mbp，主要在这些互作中扮演受惠者的角色。尽管它被推断能够接受其他伙伴提供的辅酶A类等物质，然而它仍然可以回馈一些诸如糖类等物质给伙伴们。</p>
+<div>
+    <p>图6 ET组中的PTM关系图</p>
+    <embed src="/img/2024NC_figs/Figure_7.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+<h3 id="堆肥实验对本实验的验证"><a href="#堆肥实验对本实验的验证" class="headerlink" title="堆肥实验对本实验的验证"></a>堆肥实验对本实验的验证</h3><p>在热泉环境中，我们注意到互利协同是稀有的。此外，互利协同与偏利协同的物种对的基因组大小差异是各不相同的。这些规律在堆肥实验的三个温度点（第0天，样品均温26.02℃；第5天，样品均温64.29℃；第25天，样品均温41.35℃）得到类似的验证。</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>共现和代谢互补网络的分析显示，随着温度的升高，网络密度显著增加，表明嗜热菌在极端热环境中形成了更紧密的联系，并可能更频繁地进行物质交换，这可能是一种重要的适应策略。研究揭示了嗜热菌在系统发育树上越远的物种，其代谢互补越强，尤其是在极端温度下。这与之前的研究相符，即代谢能力差异较大的物种更倾向于与远亲合作。在极端高温环境中，嗜热菌拥有更小的平均基因组大小，这与“黑皇后假说”一致，即精简基因组减少了底物和能量需求，迫使这些物种更频繁地与其他物种进行代谢互作。研究指出，许多协同关系是偏利的，其中一方（受惠者）基因组更为简化，另一方（提供者）基因组较大。这种模式在极端温度组中尤为明显。研究还验证了代谢互补性与高温在热泉和堆肥系统中的显著关联，表明高温是塑造不同环境中代谢互补性的关键因素。总的来说，这项研究提供了对嗜热菌如何在热泉等极端环境中通过代谢互补进行协同合作的深入理解，并为进一步探索微生物群落中的代谢相互作用提供了新的视角和方法。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>Peng, X., Wang, S., Wang, M. et al. Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks. Nat Commun 15, 8166 (2024).</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41467-024-52532-x">https://www.nature.com/articles/s41467-024-52532-x</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Publications/" class="print-no-link">#Publications</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks</div>
+      <div>https://emmettpeng.github.io/2024/09/20/publication-NC2024/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Emmett Peng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 20, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"YeHkpbZBcgEvVDUhALlkAvpl-MdYXbMMI","appKey":"jtxg2UEr7vvpFAljpNrl6Y1V","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://yehkpbzb.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
