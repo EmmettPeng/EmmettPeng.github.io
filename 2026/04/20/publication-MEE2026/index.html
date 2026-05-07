@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page_avatar.png">
+  <link rel="icon" href="/img/page_avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Emmett Peng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="宏基因组测序不仅能够揭示微生物群落的遗传多样性和功能潜力，也为解析大量未培养微生物提供了重要途径。本研究比较了不同测序策略在宏基因组组装与分箱中的表现，重点评估读长对结果的影响。结果表明，更长的Illumina读长有助于提升contig组装效果和基因片段重建能力；进一步结合冷泉和温泉样本分析发现，Nanopore长读长测序在重构中高质量宏基因组基因组方面具有明显优势，可使中等质量物种水平代表基因组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响">
+<meta property="og:url" content="https://emmettpeng.github.io/2026/04/20/publication-MEE2026/index.html">
+<meta property="og:site_name" content="Emmett&#39;s Note">
+<meta property="og:description" content="宏基因组测序不仅能够揭示微生物群落的遗传多样性和功能潜力，也为解析大量未培养微生物提供了重要途径。本研究比较了不同测序策略在宏基因组组装与分箱中的表现，重点评估读长对结果的影响。结果表明，更长的Illumina读长有助于提升contig组装效果和基因片段重建能力；进一步结合冷泉和温泉样本分析发现，Nanopore长读长测序在重构中高质量宏基因组基因组方面具有明显优势，可使中等质量物种水平代表基因组">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-04-20T07:55:36.000Z">
+<meta property="article:modified_time" content="2026-05-07T07:56:16.975Z">
+<meta property="article:author" content="Emmett Peng">
+<meta property="article:tag" content="Publications">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响 - Emmett&#39;s Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"emmettpeng.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>emmett&#39;s notebook</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/publications/">
+                <i class="iconfont icon-books"></i>
+                <span>Publications</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/research/">
+                <i class="iconfont icon-exp-fill"></i>
+                <span>Research</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-04-20 15:55" pubdate>
+          April 20, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>宏基因组测序不仅能够揭示微生物群落的遗传多样性和功能潜力，也为解析大量未培养微生物提供了重要途径。本研究比较了不同测序策略在宏基因组组装与分箱中的表现，重点评估读长对结果的影响。结果表明，更长的Illumina读长有助于提升contig组装效果和基因片段重建能力；进一步结合冷泉和温泉样本分析发现，Nanopore长读长测序在重构中高质量宏基因组基因组方面具有明显优势，可使中等质量物种水平代表基因组数量提升1.32倍。研究表明，在宏基因组分析中引入更长读长和Nanopore测序，将有助于更全面地认识环境微生物组。</p>
+<span id="more"></span>
+
+<h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><p>英文标题：From short to long: the impact of read length on metagenome assembly and binning<br>中文标题：从短读到长读：读长对宏基因组组装与分箱的影响<br>期刊：Methods in Ecology and Evolution<br>发表时间：2026年4月<br>第一作者：彭玺<br>通讯作者：邓晔<br>作者单位：中国科学院生态环境研究中心、中国科学院大学<br>合作单位：南京农业大学</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>宏基因组测序不仅能够揭示微生物群落的遗传多样性和功能潜力，也为解析大量未培养微生物提供了重要途径。本研究比较了不同测序策略在宏基因组组装与分箱中的表现，重点评估读长对结果的影响。结果表明，更长的Illumina读长有助于提升contig组装效果和基因片段重建能力；进一步结合冷泉和温泉样本分析发现，Nanopore长读长测序在重构中高质量宏基因组基因组方面具有明显优势，可使中等质量物种水平代表基因组数量提升1.32倍。研究表明，在宏基因组分析中引入更长读长和Nanopore测序，将有助于更全面地认识环境微生物组。</p>
+<h2 id="研究背景"><a href="#研究背景" class="headerlink" title="研究背景"></a>研究背景</h2><p>微生物群落广泛存在于土壤、水体以及人体肠道等各种环境中，在生态系统运行、元素循环和宿主健康中发挥着基础作用。近年来，宏基因组测序的发展，使研究者能够直接从环境样本中解析微生物群落的组成和功能，极大推动了环境微生物研究。<br>目前，Illumina短读长测序仍是宏基因组研究中最常用的技术路线。虽然以150 bp为代表的短读长方案应用广泛，但更长的读长，如250 bp，能够提供更多序列上下文信息，从而提升重复区域解析能力和基因组重建精度。与此同时，Nanopore等长读长测序技术的兴起，进一步拓展了宏基因组研究的边界。其超长读长能够跨越复杂基因组区域，更有利于恢复完整的操纵子、基因簇和宏基因组组装基因组。     <br>不过，不同测序策略的效果并非一概而论，而是会受到群落复杂度、物种丰度分布等因素影响。尤其在土壤、冷泉、温泉等复杂环境中，传统短读长组装往往更容易出现片段化。此外，过去常用的N50等评价指标，也未必能够真实反映宏基因组组装质量。     <br>基于此，本研究以冷泉和温泉这两类典型极端环境为对象，系统比较了不同宏基因组测序策略的表现，重点评估读长对组装质量和基因组重构能力的影响。研究旨在揭示更长短读长和Nanopore测序在环境微生物信息挖掘中的优势，为环境监测、生物技术应用和健康相关研究提供方法学参考。</p>
+<h2 id="材料与方法"><a href="#材料与方法" class="headerlink" title="材料与方法"></a>材料与方法</h2><h3 id="1-样品来源与测序设计"><a href="#1-样品来源与测序设计" class="headerlink" title="1. 样品来源与测序设计"></a>1. 样品来源与测序设计</h3><p>· 本研究选取海马冷泉和腾冲温泉两类典型极端环境样品。<br>· 采用Illumina NovaSeq 6000平台进行短读长测序，读长为PE250。<br>· 为评估插入片段长度的影响，部分冷泉样品额外设置了约500 bp的插入片段。<br>· 为比较读长对组装效果的影响，还基于原始PE250数据进行了两种重采样处理：一是从每条序列3’端截去100 bp，二是随机抽取60%的序列，以在相近数据量条件下比较不同读长表现。<br>· 同时，冷泉和温泉样品还进行了Oxford Nanopore长读长测序。</p>
+<h3 id="2-宏基因组组装与质量评估"><a href="#2-宏基因组组装与质量评估" class="headerlink" title="2. 宏基因组组装与质量评估"></a>2. 宏基因组组装与质量评估</h3><p>· Illumina数据经质控后，使用metaSPAdes进行组装，并设置两组不同的k-mer参数，比较不同组装策略的效果。<br>· Nanopore数据先经过NextPolish纠错，再使用Flye进行长读长组装。<br>· 此外，还结合短读长和长读长数据，采用OPERA-MS进行混合组装。<br>· 组装质量主要从contig数量、contig总长度、N50和reads回贴率等方面进行评估。<br>· 同时，进一步统计16S rRNA基因的总数和全长恢复情况，以评价组装对关键功能片段的保留能力。</p>
+<h3 id="3-基因预测与非冗余基因集构建"><a href="#3-基因预测与非冗余基因集构建" class="headerlink" title="3. 基因预测与非冗余基因集构建"></a>3. 基因预测与非冗余基因集构建</h3><p>· 在组装结果基础上，使用Prodigal预测编码基因。<br>· 再通过cd-hit对基因序列进行聚类，构建非冗余基因集。<br>· 这一过程用于比较不同测序策略在基因恢复能力上的差异。</p>
+<h3 id="4-宏基因组分箱与基因组质量评估"><a href="#4-宏基因组分箱与基因组质量评估" class="headerlink" title="4. 宏基因组分箱与基因组质量评估"></a>4. 宏基因组分箱与基因组质量评估</h3><p>· 对12个混合样品的组装结果统一采用VAMB进行分箱。<br>· 之所以选择VAMB，是因为它能够同时整合四核苷酸频率和多样品丰度共变信息，更适合处理冷泉和温泉这类高复杂度微生物群落。<br>· 随后利用CheckM评估分箱基因组的完整度和污染度，比较不同测序策略在中高质量MAG恢复上的表现。</p>
+<h3 id="5-物种水平代表基因组构建"><a href="#5-物种水平代表基因组构建" class="headerlink" title="5. 物种水平代表基因组构建"></a>5. 物种水平代表基因组构建</h3><p>· 最后，利用dRep按平均核苷酸一致性对所有重构基因组进行聚类。<br>· 其中先按90% ANI进行初步聚类，再按95% ANI进行细化聚类，从而获得物种水平代表基因组。<br>· 这一结果用于比较不同测序策略在物种水平基因组恢复能力上的差异。</p>
+<h2 id="结果与讨论"><a href="#结果与讨论" class="headerlink" title="结果与讨论"></a>结果与讨论</h2><h3 id="1-更长的短读长，确实能拼出更多信息"><a href="#1-更长的短读长，确实能拼出更多信息" class="headerlink" title="1. 更长的短读长，确实能拼出更多信息"></a>1. 更长的短读长，确实能拼出更多信息</h3><p>研究首先基于19个冷泉样品，对150 bp和250 bp两种Illumina短读长进行了系统比较，同时还比较了两组不同的metaSPAdes k-mer参数设置。结果表明，<strong>250 bp读长组装得到的contig总长度更大、contig数量更多、reads回贴率也更高</strong>（图1），说明更长的短读长能够提供更多序列上下文信息，从而提升宏基因组组装的完整性。      </p>
+<p>不过，一个有意思的现象是：<strong>250 bp虽然整体组装更充分，但N50反而低于150 bp</strong>。这并不意味着组装变差了。相反，这恰恰说明N50在宏基因组研究中存在局限。因为更长的读长有助于恢复低丰度物种的序列，而这些稀有物种往往会产生大量较短的contig，进而把N50“拉低”。换句话说，N50下降不一定代表组装质量下降，反而可能意味着组装覆盖了更多真实的生物多样性。    <br>  <br>这部分结果给出一个很重要的启发：<strong>宏基因组组装质量不能只看N50，必须结合多个指标综合判断。</strong></p>
+<div>
+    <p>图1 Contig的质控指标在两种短读长以及两种组装k-mer设置下的表现。</p>
+    <embed src="/img/2026MEE_figs/Figure1.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+
+<h3 id="2-更长的短读长，能让更多关键基因被完整拼出"><a href="#2-更长的短读长，能让更多关键基因被完整拼出" class="headerlink" title="2. 更长的短读长，能让更多关键基因被完整拼出"></a>2. 更长的短读长，能让更多关键基因被完整拼出</h3><p>除了看contig层面的组装结果，研究还比较了不同策略对基因片段恢复能力的影响，重点考察了16S rRNA基因和蛋白编码序列（图2）。结果显示，在16S rRNA基因重建方面，<strong>更大的k-mer参数组合通常表现更好</strong>，无论是150 bp还是250 bp数据，都有助于恢复更完整的16S片段。</p>
+<p><strong>在蛋白编码基因方面</strong>，250 bp组装得到的非冗余基因集包含更多编码序列；<strong>同时，在250 bp条件下，较大的k-mer参数还能够进一步提高基因片段的平均长度</strong>。也就是说，更长的短读长不仅能拼出更多contig，也能恢复更多、更完整的功能基因信息。</p>
+<p>这说明在仅使用Illumina平台时，适当增加读长、优化组装参数，确实能显著提升宏基因组数据的信息挖掘深度。</p>
+<div>
+    <p>图2 对四个组装结果的基因片段重建能力进行评估（*p<0.05，**p<0.01，***p<0.001，ns：无统计学意义，N=19）。（a）从四个组装结果预测的16S核糖体RNA基因数量。绿色方框代表长度超过全长一半的16S rRNA基因，红色方框代表全长16S rRNA基因。（b）从四个组装结果预测的蛋白质编码序列数量。Dunn检验的显著性用星号表示。（c）编码序列的平均长度。Dunn检验的显著性用星号表示。</p>
+    <embed src="/img/2026MEE_figs/Figure2.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+<h3 id="3-长读长测序能带来更强的组装提升"><a href="#3-长读长测序能带来更强的组装提升" class="headerlink" title="3. 长读长测序能带来更强的组装提升"></a>3. 长读长测序能带来更强的组装提升</h3><p>在进一步比较Illumina短读长组装、Nanopore长读长组装和短长读长混合组装后，长读长的优势变得更加明显。研究在冷泉和温泉样品中共获得了约281.75 Gb的Illumina数据和74.77 Gb的Nanopore数据，并基于三种策略分别进行组装。结果显示，<strong>长读长组装在超长contig重建上优势最突出</strong>：其最长contig达到4.62 Mb，而短读长组装和混合组装分别只有0.791 Mb和2.974 Mb。与此同时，长读长组装的N50也显著高于另外两种策略。  </p>
+<p>这意味着，<strong>Nanopore长读长真正解决的是“连续性”问题</strong>。对于复杂基因组区域、重复序列、结构变异等短读长难以跨越的部分，长读长更容易一次性跨过去，因此更适合拼接出连续性更高的序列。</p>
+<h3 id="4-混合组装的提升有限"><a href="#4-混合组装的提升有限" class="headerlink" title="4. 混合组装的提升有限"></a>4. 混合组装的提升有限</h3><p>我们时常假设：把短读长和长读长结合起来做混合组装，效果应该更好。然而，在本研究中，<strong>混合组装虽然在部分指标上略优于短读长组装，但优势并不总是显著</strong>（图3）。 在16S rRNA基因重建方面，混合组装的确表现最好，但相比短读长组装，并没有达到显著差异；在蛋白编码序列数量上，混合组装也没有表现出特别明显的提升。</p>
+<p>这说明，现有混合组装流程对长读长优势的利用可能还不够充分。换句话说，<strong>“短+长”并不自动等于“最好”，关键还取决于算法如何整合两类数据</strong>。</p>
+<div>
+    <p>图3 Contig的质控指标在三种组装策略（短读组装、长读组装与混合组装）下的表现。</p>
+    <embed src="/img/2026MEE_figs/Figure3.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+<h3 id="5-在宏基因组组装基因组（MAG）重建层面，长读长的价值更加明显"><a href="#5-在宏基因组组装基因组（MAG）重建层面，长读长的价值更加明显" class="headerlink" title="5. 在宏基因组组装基因组（MAG）重建层面，长读长的价值更加明显"></a>5. 在宏基因组组装基因组（MAG）重建层面，长读长的价值更加明显</h3><p>研究对三种组装结果统一使用VAMB进行分箱，并用CheckM评估质量。最终共恢复出1893个MAG，其中792个为中等质量，277个为高质量。</p>
+<p>值得注意的是，虽然长读长数据量不到短读长的三分之一，但依然恢复出了大量中高质量MAG。更关键的是，<strong>长读长组装获得的中等质量MAG，其N50最高，连续性明显优于短读长和混合组装</strong>。 在23个由少于10条contig构成的中等质量MAG中，有22个来自长读长组装；甚至有1个长读长组装得到的MAG只包含单一contig，且完整度达到100%，污染度仅为0.34%。</p>
+<p>这类结果非常有说服力。它说明长读长不仅能把序列拼得更长，而且能够真正提升基因组层面的恢复质量，尤其是在获得高连续性、接近完整的微生物基因组方面表现突出。</p>
+<h3 id="6-长读长带来的新物种信息"><a href="#6-长读长带来的新物种信息" class="headerlink" title="6. 长读长带来的新物种信息"></a>6. 长读长带来的新物种信息</h3><p>研究还进一步对中等质量以上的MAG进行了去冗余聚类，以评估不同测序策略恢复物种水平代表基因组的能力。结果显示，仅使用短读长组装时，共恢复305个物种水平代表基因组；而在引入长读长数据后，额外增加了98个物种水平代表基因组，提升幅度达到32.13%（图4）。</p>
+<p>这一结果很关键。它说明即便长读长测序数据量更少，仍然能够显著提升基因组恢复的“物种分辨率”。也就是说，<strong>长读长并不只是让已有结果更完整，它还能帮助研究者看到原本看不到的微生物成员。</strong></p>
+<p>高测序深度的短读长测序依然有其不可替代的价值，尤其对于捕获低丰度稀有物种非常重要。因此，长读长更像是在提高“基因组蓝图质量”，而高深度短读长则更有助于拓展“稀有物种覆盖面”。</p>
+<div>
+    <p>图4 （a）从三个组装结果中筛选出的中等质量 MAG 的 N50 值。（b）从三个组装结果的中等质量 MAG 中识别出的物种水平代表性基因组（SRG）的数量。</p>
+    <embed src="/img/2026MEE_figs/Figure6.pdf" type="application/pdf" width="100%" height="600px">
+</div>
+
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>Peng, X., Yang, X., Wang, D., Zhao, B., Feng, K., He, Q., Wang, S., &amp; Deng, Y. (2026). From short to long: The impact of read length on metagenome assembly and binning. Methods in Ecology and Evolution, 00, 1–11.</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="http://doi.org/10.1111/2041-210x.70306">http://doi.org/10.1111/2041-210x.70306</a> </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Publications/" class="print-no-link">#Publications</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响</div>
+      <div>https://emmettpeng.github.io/2026/04/20/publication-MEE2026/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Emmett Peng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 20, 2026</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/20/publication-NC2024/" title="Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks">
+                        <span class="hidden-mobile">Nature Communications | Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"YeHkpbZBcgEvVDUhALlkAvpl-MdYXbMMI","appKey":"jtxg2UEr7vvpFAljpNrl6Y1V","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://yehkpbzb.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <p>&copy; Copyright 2025 Xi Emmett Peng, All rights reserved.</p> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
