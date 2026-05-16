@@ -24,7 +24,7 @@
 <meta property="og:description" content="宏基因组测序不仅能够揭示微生物群落的遗传多样性和功能潜力，也为解析大量未培养微生物提供了重要途径。本研究比较了不同测序策略在宏基因组组装与分箱中的表现，重点评估读长对结果的影响。结果表明，更长的Illumina读长有助于提升contig组装效果和基因片段重建能力；进一步结合冷泉和温泉样本分析发现，Nanopore长读长测序在重构中高质量宏基因组基因组方面具有明显优势，可使中等质量物种水平代表基因组">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-04-20T07:55:36.000Z">
-<meta property="article:modified_time" content="2026-05-07T07:56:16.975Z">
+<meta property="article:modified_time" content="2026-05-16T05:07:09.705Z">
 <meta property="article:author" content="Emmett Peng">
 <meta property="article:tag" content="Publications">
 <meta name="twitter:card" content="summary_large_image">
@@ -288,7 +288,7 @@
 <p>不过，一个有意思的现象是：<strong>250 bp虽然整体组装更充分，但N50反而低于150 bp</strong>。这并不意味着组装变差了。相反，这恰恰说明N50在宏基因组研究中存在局限。因为更长的读长有助于恢复低丰度物种的序列，而这些稀有物种往往会产生大量较短的contig，进而把N50“拉低”。换句话说，N50下降不一定代表组装质量下降，反而可能意味着组装覆盖了更多真实的生物多样性。    <br>  <br>这部分结果给出一个很重要的启发：<strong>宏基因组组装质量不能只看N50，必须结合多个指标综合判断。</strong></p>
 <div>
     <p>图1 Contig的质控指标在两种短读长以及两种组装k-mer设置下的表现。</p>
-    <embed src="/img/2026MEE_figs/Figure1.pdf" type="application/pdf" width="100%" height="600px">
+    <embed src="/img/2026MEE_figs/Figure 1.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
 
@@ -298,7 +298,7 @@
 <p>这说明在仅使用Illumina平台时，适当增加读长、优化组装参数，确实能显著提升宏基因组数据的信息挖掘深度。</p>
 <div>
     <p>图2 对四个组装结果的基因片段重建能力进行评估（*p<0.05，**p<0.01，***p<0.001，ns：无统计学意义，N=19）。（a）从四个组装结果预测的16S核糖体RNA基因数量。绿色方框代表长度超过全长一半的16S rRNA基因，红色方框代表全长16S rRNA基因。（b）从四个组装结果预测的蛋白质编码序列数量。Dunn检验的显著性用星号表示。（c）编码序列的平均长度。Dunn检验的显著性用星号表示。</p>
-    <embed src="/img/2026MEE_figs/Figure2.pdf" type="application/pdf" width="100%" height="600px">
+    <embed src="/img/2026MEE_figs/Figure 2.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
 
@@ -308,7 +308,7 @@
 <p>这说明，现有混合组装流程对长读长优势的利用可能还不够充分。换句话说，<strong>“短+长”并不自动等于“最好”，关键还取决于算法如何整合两类数据</strong>。</p>
 <div>
     <p>图3 Contig的质控指标在三种组装策略（短读组装、长读组装与混合组装）下的表现。</p>
-    <embed src="/img/2026MEE_figs/Figure3.pdf" type="application/pdf" width="100%" height="600px">
+    <embed src="/img/2026MEE_figs/Figure 3.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
 
@@ -320,7 +320,7 @@
 <p>高测序深度的短读长测序依然有其不可替代的价值，尤其对于捕获低丰度稀有物种非常重要。因此，长读长更像是在提高“基因组蓝图质量”，而高深度短读长则更有助于拓展“稀有物种覆盖面”。</p>
 <div>
     <p>图4 （a）从三个组装结果中筛选出的中等质量 MAG 的 N50 值。（b）从三个组装结果的中等质量 MAG 中识别出的物种水平代表性基因组（SRG）的数量。</p>
-    <embed src="/img/2026MEE_figs/Figure6.pdf" type="application/pdf" width="100%" height="600px">
+    <embed src="/img/2026MEE_figs/Figure 6.pdf" type="application/pdf" width="100%" height="600px">
 </div>
 
 
