@@ -1,0 +1,32 @@
+{
+  "profile": "Microbial ecologist and bioinformatics researcher completing a Ph.D. at the Chinese Academy of Sciences. I study microbial interactions through ecological networks, metagenomics, metabolic models, and quorum-sensing inference.",
+  "researchOutput": "Author or co-author of 19 peer-reviewed publications, including four first-author papers and work published in Nature Communications, iMeta, Methods in Ecology and Evolution, Water Research, Microbiome, and The ISME Journal.",
+  "links": [
+    {"label": "Email", "href": "mailto:emmettpengxi@hotmail.com"},
+    {"label": "GitHub", "href": "https://github.com/EmmettPeng"},
+    {"label": "Website", "href": "https://www.emmettnotebook.com"}
+  ],
+  "education": [
+    {"date": "2019.09–2026.01", "title": "Ph.D. in Microbial Ecology", "place": "Research Center for Eco-Environmental Sciences, Chinese Academy of Sciences · advised by Prof. Ye Deng"},
+    {"date": "2024.09–2025.09", "title": "International Scholar", "place": "Department of Microbiology, Immunology and Transplantation, KU Leuven · co-supervised by Dr. Karoline Faust"},
+    {"date": "2015.09–2019.06", "title": "B.Sc. in Biological Sciences", "place": "China Agricultural University"}
+  ],
+  "researchExperience": [
+    {"date": "2024.01–2025.09", "title": "Quorum-sensing interaction networks", "place": "KU Leuven and Research Center for Eco-Environmental Sciences", "text": "Classified quorum-sensing functions from metagenome-assembled genomes using a KEGG-based reference of 41 pathways and 18 signal molecule types, then developed a sender–receiver model for directional microbial communication networks."},
+    {"date": "2021.09–2023.12", "title": "Metabolic complementarity and co-occurrence", "place": "Research Center for Eco-Environmental Sciences, Chinese Academy of Sciences", "text": "Integrated genome-scale metabolic complementarity with random-matrix-theory co-occurrence networks to study microbial interactions across a hot-spring temperature gradient. The work led to first-author papers in Nature Communications and iMeta."},
+    {"date": "2020.09–2021.09", "title": "Metagenomic workflow and platform development", "place": "Integrated Network Analysis Pipeline and Galaxy platform", "text": "Contributed to iNAP and developed practical experience in quality control, assembly, mapping, and genome binning for shotgun and Nanopore metagenomic data."},
+    {"date": "2019.09–2020.09", "title": "Bohai Sea interdomain ecological networks", "place": "Changxing Island monitoring area, Bohai Sea", "text": "Combined amplicon analysis, interdomain ecological networks, centrality measures, and beta-diversity analysis to compare microbial communities and inferred interactions in sediment and seawater."}
+  ],
+  "methods": [
+    {"title": "Microbial interaction modelling", "text": "Interdomain and co-occurrence networks, metabolic complementarity, quorum-sensing sender–receiver inference"},
+    {"title": "Metagenomics", "text": "Amplicon and shotgun sequencing, Nanopore data, quality control, assembly, mapping, and genome binning"},
+    {"title": "Research infrastructure", "text": "Galaxy, iNAP, DMAP, Linux, Shell/Bash, Python, and R"},
+    {"title": "Laboratory methods", "text": "DNA extraction, PCR, gel electrophoresis, aseptic technique, and microbial culturing"}
+  ],
+  "awards": [
+    {"date": "2025.04", "title": "President Scholarship of the Chinese Academy of Sciences", "place": "Grand Award"},
+    {"date": "2024.12", "title": "China National Scholarship for Doctoral Students", "place": "Ministry of Education of the People’s Republic of China"},
+    {"date": "2020–2023", "title": "First Prize Scholarship", "place": "Key Laboratory of Environmental Biotechnology"}
+  ],
+  "researchOutput": "Author or co-author of 19 peer-reviewed publications, including four first-author papers and work published in Nature Communications, iMeta, Methods in Ecology and Evolution, Water Research, Microbiome, and The ISME Journal."
+}

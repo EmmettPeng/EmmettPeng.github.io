@@ -1,0 +1,11 @@
+{
+  "name": "emmett-notebook",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "NEXT_DIST_DIR=.next-dev next dev",
+    "build": "NEXT_DIST_DIR=.next-build next build",
+    "start": "NEXT_DIST_DIR=.next-build next start"
+  },
+  "dependencies": {"gray-matter": "^4.0.3", "markdown-it": "^14.1.0", "next": "^15.5.2", "react": "^19.1.1", "react-dom": "^19.1.1"}
+}

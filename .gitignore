@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+# `public/` contains source assets for the Next.js site.
+.next/
+.next-build/
+.next-dev/
+out/
+.deploy*/
+_multiconfig.yml

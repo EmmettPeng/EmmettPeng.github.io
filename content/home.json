@@ -1,0 +1,44 @@
+{
+  "name": "Xi Emmett Peng",
+  "chineseName": "彭玺",
+  "pinyinName": "Péng Xǐ",
+  "tagline": "Ph.D. in Ecology (2026) / Molecular ecology & bioinformatics researcher",
+  "avatar": "/img/EmmettAva.JPG",
+  "links": [
+    {"label": "Email", "href": "mailto:emmettpengxi@hotmail.com"},
+    {"label": "GitHub", "href": "https://github.com/EmmettPeng"},
+    {"label": "ORCID", "href": "https://orcid.org/0009-0000-2161-3461"},
+    {"label": "WOS", "href": "https://www.webofscience.com/wos/author/record/ADQ-2023-2022"}
+  ],
+  "bioEssay": [
+    "For a long time, science to me meant learning what was already known. Growing up in an exam-oriented education system, I became used to treating biology as a collection of established knowledge to be understood, remembered, and occasionally demonstrated through experiments. Even when I first encountered laboratory work, the goal was often to reproduce principles whose answers were already known. After years of studying biochemistry, genetics, and molecular biology, I still found myself unsure of what kind of science I truly wanted to pursue. I enjoyed biology, but often felt that the experiments in front of me were only very small pieces of a much larger question that I had not yet learned how to see.",
+    "That began to change when I entered graduate training in ecology. My attention shifted from molecules and cells to populations, communities, and ecosystems, and with that shift came a different understanding of research itself. I became fascinated by the idea that microorganisms, despite existing at the scale of individual cells, are deeply embedded in much larger systems. Their interactions, metabolism, competition, cooperation, and communication collectively connect the microscopic world to the environment around them. Studying these communities also taught me that meaningful scientific questions rarely belong to one discipline alone. Biology constantly meets chemistry, physics, mathematics, computer science, and even ideas that resemble those used to understand social systems.",
+    "Looking back, I have come to think that finding a research direction is not simply about choosing a topic. It is about finding the scale and perspective from which the world becomes most interesting to you. Sometimes that perspective is not obvious at the beginning. It emerges gradually, as we move beyond learning existing answers and begin to discover the kinds of questions we genuinely want to ask."
+  ],
+  "currentWork": "Right now, I am in a gap period.",
+  "updates": [
+    {"date": "2026.05", "title": "MEE story-behind", "summary": "Published the story behind our study of read length, metagenome assembly and binning.", "href": "/notes/long-read-metagenomics-story/"},
+    {"date": "2026.05", "title": "New paper on Methods in Ecology and Evolution", "summary": "From short to long: The impact of read length on metagenome assembly and binning", "href": "https://doi.org/10.1111/2041-210x.70306"},
+    {"date": "2025.11", "title": "Ph.D. defense!", "summary": "Ph.D. thesis:  A Metagenomics-Based Framework for Analyzing Microbial Metabolic and Quorum Sensing Networks (2019-2025)", "href": "/cv/"},
+    {"date": "2025.04", "title": "CAS President Scholarship!", "summary": "Received the Grand Award of the President Scholarship of the Chinese Academy of Sciences.", "href": "/cv/"},
+    {"date": "2024.12", "title": "China National Scholarship for Doctoral Students!", "summary": "Received the China National Scholarship for Doctoral Students from Ministry of Education of the People's Republic of China.", "href": "/cv/"},
+    {"date": "2024.09", "title": "Visiting Ph.D. student at KU Leuven", "summary": "Arrived in Belgium to start as an international visitor of Dr. Karoline Faust's group, KU Leuven.", "href": "/cv/"},
+    {"date": "2024.09", "title": "New paper on iMeta", "summary": "iNAP 2.0: Harnessing metabolic complementarity in microbial network analysis", "href": "https://doi.org/10.1002/imt2.235"},
+    {"date": "2024.09", "title": "New paper on Nature Communications", "summary": "Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks", "href": "https://www.nature.com/articles/s41467-024-52532-x"},
+    {"date": "2024.05", "title": "CSC Award!", "summary": "Awarded the CSC (China Scholarship Council) scholarship."}
+  ],
+  "selectedPublications": [
+    {"venue": "Methods in Ecology and Evolution, 2026", "title": "From short to long: The impact of read length on metagenome assembly and binning", "authors": "Xi Peng, Xingsheng Yang, Danrui Wang, Bo Zhao, Kai Feng, Qing He, Shang Wang, Ye Deng*", "href": "https://doi.org/10.1111/2041-210x.70306"},
+    {"venue": "Nature Communications, 2024", "title": "Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks", "authors": "Xi Peng, Shang Wang, Miaoxiao Wang, Kai Feng, Qing He, Xingsheng Yang, Weiguo Hou, Fangru Li, Yuxiang Zhao, Baolan Hu, Xiao Zou, Ye Deng*.", "href": "https://www.nature.com/articles/s41467-024-52532-x"},
+    {"venue": "iMeta, 2024", "title": "iNAP 2.0: Harnessing metabolic complementarity in microbial network analysis", "authors": "Xi Peng, Kai Feng, Xingsheng Yang, Qing He, Bo Zhao, Tong Li, Shang Wang, Ye Deng*", "href": "https://doi.org/10.1002/imt2.235"}
+  ],
+  "experience": [
+    {"date": "2024.09–2025.09", "title": "Visiting Ph.D. Student", "place": "Department of Microbiology, Immunology and Transplantation, KU Leuven"},
+    {"date": "2019.09–2026.01", "title": "Ph.D. in Microbial Ecology", "place": "Research Center for Eco-Environmental Sciences, Chinese Academy of Sciences"},
+    {"date": "2015.09–2019.06", "title": "B.Sc. in Biological Sciences", "place": "China Agricultural University"}
+  ],
+  "externalLinks": [
+    {"label": "MEM - Deng Lab", "href": "https://denglab.org.cn/"},
+    {"label": "Lab of Microbial Systems Biology - KU Leuven", "href": "http://msysbiology.com/index.html"}
+  ]
+}
