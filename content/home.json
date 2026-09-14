@@ -8,7 +8,8 @@
     {"label": "Email", "href": "mailto:emmettpengxi@hotmail.com"},
     {"label": "GitHub", "href": "https://github.com/EmmettPeng"},
     {"label": "ORCID", "href": "https://orcid.org/0009-0000-2161-3461"},
-    {"label": "WOS", "href": "https://www.webofscience.com/wos/author/record/ADQ-2023-2022"}
+    {"label": "WOS", "href": "https://www.webofscience.com/wos/author/record/ADQ-2023-2022"},
+    {"label": "Q-SCOPE (demo)", "href": "https://www.emmettnotebook.com/Q-SCOPE/"}
   ],
   "bioEssay": [
     "For a long time, science to me meant learning what was already known. Growing up in an exam-oriented education system, I became used to treating biology as a collection of established knowledge to be understood, remembered, and occasionally demonstrated through experiments. Even when I first encountered laboratory work, the goal was often to reproduce principles whose answers were already known. After years of studying biochemistry, genetics, and molecular biology, I still found myself unsure of what kind of science I truly wanted to pursue. I enjoyed biology, but often felt that the experiments in front of me were only very small pieces of a much larger question that I had not yet learned how to see.",
