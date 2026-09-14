@@ -10,3 +10,4 @@ node_modules/
 out/
 .deploy*/
 _multiconfig.yml
+HANDOFF.md
