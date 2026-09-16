@@ -5,8 +5,6 @@ date: 2025-11-17 21:49:34
 
 ## Main contributions
 
-I am an author or co-author of 19 peer-reviewed publications, including four first-author papers. The five works below represent my main methodological contributions.
-
 **Xi Peng**, Xingsheng Yang, Danrui Wang, Bo Zhao, Kai Feng, Qing He, Shang Wang, Ye Deng*. (2026) From short to long: The impact of read length on metagenome assembly and binning. *Methods in Ecology and Evolution*. [**Link**](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210x.70306)
 
 The story behind: [**MEE: The story behind | A longer read on microbes: Why bigger fragments matter in Earth’s harshest habitats**](https://www.emmettnotebook.com/2026/05/07/publication-2026MEE-blogpost/)
