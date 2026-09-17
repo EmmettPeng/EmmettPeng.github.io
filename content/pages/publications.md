@@ -22,6 +22,8 @@ Kai Feng, **Xi Peng**, Zheng Zhang, Songsong Gu, Qing He, Wenli Shen, Zhujun Wan
 
 ## Other contributions
 
+Tong Li, Kai Feng, Shang Wang, Xiongfeng Du, Jingjing Li, Songsong Gu, Bo Zhao, Xingsheng Yang, **Xi Peng**, Qing He, Yingcheng Wang, Danrui Wang, Jie Wang, Zhihan Wang, Mingqian Liu, Juanjuan Xiao, Jianan Men, Decai Jin, Jingwei Zhang, Ye Deng*. (2026) Integrating digital PCR and metagenomics to quantify potential soilborne bacterial pathogens in urban ecosystem. *Journal of Hazardous Materials*. [**Link**](https://doi.org/10.1016/j.jhazmat.2026.142312)
+
 Xingsheng Yang, Bo Zhao, Kai Feng, Jie Wang, Mingqian Liu, **Xi Peng**, Qing He, Yanjuan Lu, Hassan Waseem, Shang Wang, Mari-Karoliina H Winkler, Joana Falcão Salles, Ye Deng*. (2026) Microbial synthesis structures organic compound composition in anaerobic digestion. *ISME Journal*. [**Link**](https://doi.org/10.1093/ismejo/wrag036)
 
 Xingsheng Yang, **Xi Peng**, Kai Feng, Shang Wang, Xiao Zou, Ye Deng*. (2025) Organic molecular network analysis reveals transformation signatures of dissolved organic matter during anaerobic digestion process. *Water Research*.  [**Link**](http://dx.doi.org/10.1016/j.watres.2025.123777)
