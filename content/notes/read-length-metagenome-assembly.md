@@ -13,13 +13,13 @@ tags:
 
 ## 论文信息
 
-英文标题：From short to long: the impact of read length on metagenome assembly and binning
-中文标题：从短读到长读：读长对宏基因组组装与分箱的影响
-期刊：Methods in Ecology and Evolution
-发表时间：2026年4月
-第一作者：彭玺
-通讯作者：邓晔
-作者单位：中国科学院生态环境研究中心、中国科学院大学
+英文标题：From short to long: the impact of read length on metagenome assembly and binning<br>
+中文标题：从短读到长读：读长对宏基因组组装与分箱的影响<br>
+期刊：Methods in Ecology and Evolution<br>
+发表时间：2026年4月<br>
+第一作者：彭玺<br>
+通讯作者：邓晔<br>
+作者单位：中国科学院生态环境研究中心、中国科学院大学<br>
 合作单位：南京农业大学
 
 ## 摘要

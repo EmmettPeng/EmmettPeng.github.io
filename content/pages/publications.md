@@ -7,12 +7,12 @@ date: 2025-11-17 21:49:34
 
 **Xi Peng**, Xingsheng Yang, Danrui Wang, Bo Zhao, Kai Feng, Qing He, Shang Wang, Ye Deng*. (2026) From short to long: The impact of read length on metagenome assembly and binning. *Methods in Ecology and Evolution*. [**Link**](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210x.70306)
 
-The story behind: [**MEE: The story behind | A longer read on microbes: Why bigger fragments matter in Earth’s harshest habitats**](https://www.emmettnotebook.com/2026/05/07/publication-2026MEE-blogpost/)
-Chinese repo: [**Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响**](https://www.emmettnotebook.com/2026/04/20/publication-MEE2026/)
+The story behind: [**MEE: The story behind | A longer read on microbes: Why bigger fragments matter in Earth’s harshest habitats**](/notes/long-read-metagenomics-story/)<br>
+Chinese repo: [**Methods in Ecology and Evolution | 从短读到长读：读长对宏基因组组装与分箱的影响**](/notes/read-length-metagenome-assembly/)
 
 **Xi Peng**, Shang Wang, Miaoxiao Wang, Kai Feng, Qing He, Xingsheng Yang, Weiguo Hou, Fangru Li, Yuxiang Zhao, Baolan Hu, Xiao Zou, Ye Deng*. (2024) Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks. *Nature Communications*.  [**Link**](https://www.nature.com/articles/s41467-024-52532-x)
 
-Chinese repo: [**Nature Communications | 利用共现与代谢互补网络揭示嗜热菌群的代谢依赖**](https://www.emmettnotebook.com/2024/09/20/publication-NC2024/)
+Chinese repo: [**Nature Communications | 利用共现与代谢互补网络揭示嗜热菌群的代谢依赖**](/notes/metabolic-interdependencies-thermophiles/)
 
 **Xi Peng**, Kai Feng*, Xingsheng Yang, Qing He, Bo Zhao, Tong Li, Shang Wang, Ye Deng*. (2024) iNAP 2.0: Harnessing metabolic complementarity in microbial network analysis. *iMeta*.  [**Link**](https://doi.org/10.1002/imt2.235)
 

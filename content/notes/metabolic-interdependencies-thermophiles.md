@@ -13,13 +13,13 @@ tags:
 
 ## 论文信息
 
-英文标题：Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks
-中文标题：利用共现与代谢互补网络揭示嗜热菌群的代谢依赖
-期刊：Nature Communications
-发表时间：2024年9月
-第一作者：彭玺
-通讯作者：邓晔
-作者单位：中国科学院生态环境研究中心、中国科学院大学
+英文标题：Metabolic interdependencies in thermophilic communities are revealed using co-occurrence and complementarity networks<br>
+中文标题：利用共现与代谢互补网络揭示嗜热菌群的代谢依赖<br>
+期刊：Nature Communications<br>
+发表时间：2024年9月<br>
+第一作者：彭玺<br>
+通讯作者：邓晔<br>
+作者单位：中国科学院生态环境研究中心、中国科学院大学<br>
 合作单位：苏黎世联邦理工学院、中国地质大学（北京）、浙江大学、贵州大学
 
 ## 摘要
